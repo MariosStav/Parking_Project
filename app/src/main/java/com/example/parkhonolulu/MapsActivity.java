@@ -1,8 +1,8 @@
 package com.example.parkhonolulu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,6 +29,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Initialize the map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
         // Set up button click listeners
@@ -36,38 +37,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Button btnRight = findViewById(R.id.btnRight);
         Button btnBack = findViewById(R.id.btnBack);
 
-        btnLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MapsActivity.this, "Left button clicked", Toast.LENGTH_SHORT).show();
-                // Add your parking-specific functionality here
-            }
+        btnLeft.setOnClickListener(v -> {
+            Toast.makeText(MapsActivity.this, "Left button clicked", Toast.LENGTH_SHORT).show();
+            // Add your parking-specific functionality here
         });
 
-        btnRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MapsActivity.this, "Right button clicked", Toast.LENGTH_SHORT).show();
-                // Add your parking-specific functionality here
-            }
+        btnRight.setOnClickListener(v -> {
+            Toast.makeText(MapsActivity.this, "Right button clicked", Toast.LENGTH_SHORT).show();
+            // Add your parking-specific functionality here
         });
 
         // Add back button functionality
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MapsActivity.this, "Going back", Toast.LENGTH_SHORT).show();
-                // Method 1: Finish current activity to go back
-                finish();
+        btnBack.setOnClickListener(v -> {
+            Toast.makeText(MapsActivity.this, "Going back", Toast.LENGTH_SHORT).show();
+            // Method 1: Finish current activity to go back
+            finish();
 
-                // Method 2 (Alternative): Use Android's built-in back navigation
-                // onBackPressed();
-            }
+            // Method 2 (Alternative): Use Android's built-in back navigation
+            // onBackPressed();
         });
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         // Set map type
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -101,9 +93,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         }
                     }
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(MapsActivity.this, "Failed to load parking locations", Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e -> Toast.makeText(MapsActivity.this, "Failed to load parking locations", Toast.LENGTH_SHORT).show());
 
     }
 }
