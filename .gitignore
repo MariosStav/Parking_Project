@@ -1,0 +1,38 @@
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.hprof
+*.log
+*.pid
+*.seed
+*.cxx/
+*.apk
+*.ap_
+
+# Build files
+build/
+app/build/
+
+# Local configuration files (sensitive information)
+local.properties
+
+# Gradle files
+.gradle/
+gradle-app.setting
+
+# Keystore files (sensitive information - should not be committed)
+*.jks
+*.keystore
+
+# Google services (can be sensitive or environment-specific)
+# Consider if you want to commit this or add it on the CI/CD server
+# google-services.json
+# app/google-services.json
+
+# Captures and snapshots
+captures/
+.cxx/
+
+# Misc
+.DS_Store
+Thumbs.db
