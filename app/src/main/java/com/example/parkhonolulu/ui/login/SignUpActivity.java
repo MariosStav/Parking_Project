@@ -15,12 +15,10 @@ import com.example.parkhonolulu.User;
 import com.example.parkhonolulu.Vehicle;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private Button signUpButton;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
 
@@ -35,7 +33,7 @@ public class SignUpActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        signUpButton = findViewById(R.id.signup);
+        Button signUpButton = findViewById(R.id.signup);
         nameEditText = findViewById(R.id.editTextTextPersonName);
         emailEditText = findViewById(R.id.editTextTextEmailAddress);
         surnameEditText = findViewById(R.id.editTextTextPersonName2);
@@ -85,18 +83,12 @@ public class SignUpActivity extends AppCompatActivity {
                                                     startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                                                     finish();
                                                 })
-                                                .addOnFailureListener(e -> {
-                                                    Toast.makeText(SignUpActivity.this, "Error saving user: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                });
+                                                .addOnFailureListener(e -> Toast.makeText(SignUpActivity.this, "Error saving user: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                                     })
-                                    .addOnFailureListener(e -> {
-                                        Toast.makeText(SignUpActivity.this, "Error saving vehicle: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    });
+                                    .addOnFailureListener(e -> Toast.makeText(SignUpActivity.this, "Error saving vehicle: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                         }
                     })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(SignUpActivity.this, "Sign up failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+                    .addOnFailureListener(e -> Toast.makeText(SignUpActivity.this, "Sign up failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         });
     }
 }

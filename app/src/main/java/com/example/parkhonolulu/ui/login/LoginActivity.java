@@ -1,16 +1,12 @@
 package com.example.parkhonolulu.ui.login;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,9 +18,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.example.parkhonolulu.R;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,8 +30,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private ProgressBar loadingProgressBar;
-    private Button loginButton;
-    private Button signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +40,8 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
-        loginButton = findViewById(R.id.login);
-        signUpButton = findViewById(R.id.signup);
+        Button loginButton = findViewById(R.id.login);
+        Button signUpButton = findViewById(R.id.signup);
         loadingProgressBar = findViewById(R.id.loading);
 
         signUpButton.setOnClickListener(v -> {
@@ -81,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String email = document.getString("email");
 
                                 // Κάνε login με email
+                                assert email != null;
                                 auth.signInWithEmailAndPassword(email, password)
                                         .addOnCompleteListener(loginTask -> {
                                             loadingProgressBar.setVisibility(View.GONE);
@@ -140,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 // to ensure they happen after the async vehicle fetch attempt.
 
                                             } else {
-                                                Toast.makeText(LoginActivity.this, "Authentication failed: " + loginTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "Authentication failed: " + Objects.requireNonNull(loginTask.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
