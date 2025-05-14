@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.parkhonolulu.HomePage;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
 import com.example.parkhonolulu.R;
@@ -81,11 +80,11 @@ public class LoginActivity extends AppCompatActivity {
                                         .addOnCompleteListener(loginTask -> {
                                             loadingProgressBar.setVisibility(View.GONE);
                                             if (loginTask.isSuccessful()) {
-                                                FirebaseUser user = auth.getCurrentUser();
+                                                auth.getCurrentUser();
                                                 Toast.makeText(LoginActivity.this, "Welcome, " + username, Toast.LENGTH_SHORT).show();
 
                                                 // Log user info
-                                                String userId = document.getId(); // Firestore document ID
+                                                document.getId();// Firestore document ID
                                                 String name = document.getString("name");
                                                 String email_log = document.getString("email");
                                                 String surname = document.getString("surname");
