@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="pastel_yellow">#FFFFE0</color>
+    <color name="pastel_green">#90EE90</color>
+    <color name="parking_orange_fallback">#FFA500</color> <!-- Orange for "Other" in legend -->
 </resources>

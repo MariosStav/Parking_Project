@@ -3,12 +3,12 @@ package com.example.parkhonolulu;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,48 +31,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
-
-        // Set up button click listeners
-        Button btnLeft = findViewById(R.id.btnLeft);
-        Button btnRight = findViewById(R.id.btnRight);
-        Button btnBack = findViewById(R.id.btnBack);
-
-        btnLeft.setOnClickListener(v -> {
-            Toast.makeText(MapsActivity.this, "Left button clicked", Toast.LENGTH_SHORT).show();
-            // Add your parking-specific functionality here
-        });
-
-        btnRight.setOnClickListener(v -> {
-            Toast.makeText(MapsActivity.this, "Right button clicked", Toast.LENGTH_SHORT).show();
-            // Add your parking-specific functionality here
-        });
-
-        // Add back button functionality
-        btnBack.setOnClickListener(v -> {
-            Toast.makeText(MapsActivity.this, "Going back", Toast.LENGTH_SHORT).show();
-            // Method 1: Finish current activity to go back
-            finish();
-
-            // Method 2 (Alternative): Use Android's built-in back navigation
-            // onBackPressed();
-        });
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        // Set map type
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        // Move camera to Honolulu with appropriate zoom level
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(HONOLULU, DEFAULT_ZOOM));
 
-        // Add a marker in Honolulu
         mMap.addMarker(new MarkerOptions()
                 .position(HONOLULU)
                 .title("Honolulu, Hawaii"));
 
-        // Enable necessary UI controls for a parking app
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -83,17 +53,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         String name = document.getString("name");
+                        String type = document.getString("type"); // Get the type field
                         GeoPoint geoPoint = document.getGeoPoint("geopoint");
 
-                        if (geoPoint != null && name != null) {
+                        if (geoPoint != null && name != null && type != null) {
                             LatLng position = new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude());
+
+                            // Choose marker color based on type
+                            float color;
+                            if (type.equalsIgnoreCase("Electric")) {
+                                color = BitmapDescriptorFactory.HUE_YELLOW; // Pastel Yellow representation
+                            } else if (type.equalsIgnoreCase("Gas")) {
+                                color = BitmapDescriptorFactory.HUE_GREEN; // Pastel Green representation
+                            } else {
+                                color = BitmapDescriptorFactory.HUE_ORANGE; // default/fallback
+                            }
+
                             mMap.addMarker(new MarkerOptions()
                                     .position(position)
-                                    .title(name));
+                                    .title(name)
+                                    .icon(BitmapDescriptorFactory.defaultMarker(color)));
                         }
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(MapsActivity.this, "Failed to load parking locations", Toast.LENGTH_SHORT).show());
-
     }
 }
