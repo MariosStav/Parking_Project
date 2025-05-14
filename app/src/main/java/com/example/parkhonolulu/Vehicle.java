@@ -1,11 +1,23 @@
-import java.util.ArrayList;
+package com.example.parkhonolulu;
 
 public class Vehicle {
     private String vehicleNum;
-    private String CarType;
+    private String carType;
+
+    public Vehicle() {
+        // Required for Firebase
+    }
 
     public Vehicle(String vehicleNum, String carType) {
         this.vehicleNum = vehicleNum;
-        CarType = carType;
+        this.carType = carType;
+    }
+
+    public String getVehicleNum() {
+        return vehicleNum;
+    }
+
+    public String getCarType() {
+        return carType;
     }
 }

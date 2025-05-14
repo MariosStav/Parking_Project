@@ -3,6 +3,7 @@ package com.example.parkhonolulu.ui.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.example.parkhonolulu.R;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -85,7 +87,58 @@ public class LoginActivity extends AppCompatActivity {
                                             if (loginTask.isSuccessful()) {
                                                 FirebaseUser user = auth.getCurrentUser();
                                                 Toast.makeText(LoginActivity.this, "Welcome, " + username, Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(LoginActivity.this, HomePage.class));
+
+                                                // Log user info
+                                                String userId = document.getId(); // Firestore document ID
+                                                String name = document.getString("name");
+                                                String email_log = document.getString("email");
+                                                String surname = document.getString("surname");
+                                                String role = document.getString("role");
+                                                String uid = document.getString("uid");
+                                                String vehicleId = document.getString("vehicle"); // this may be a vehicle document ID
+                                                String username_log = document.getString("username");
+
+                                                // Print all fields
+                                                Log.d("LoginInfo", "User Info ->");
+                                                Log.d("LoginInfo", "Name: " + name);
+                                                Log.d("LoginInfo", "Surname: " + surname);
+                                                Log.d("LoginInfo", "Username: " + username_log);
+                                                Log.d("LoginInfo", "Email: " + email_log);
+                                                Log.d("LoginInfo", "Role: " + role);
+                                                Log.d("LoginInfo", "UID: " + uid);
+                                                Log.d("LoginInfo", "Vehicle ID: " + vehicleId);
+
+                                                if (vehicleId != null && !vehicleId.isEmpty()) {
+                                                    db.collection("vehicles").document(vehicleId).get()
+                                                            .addOnSuccessListener(vehicleDocument -> {
+                                                                if (vehicleDocument.exists()) {
+                                                                    String vehicleNum = vehicleDocument.getString("vehicleNum");
+                                                                    String carType = vehicleDocument.getString("carType");
+                                                                    Log.d("LoginInfo", "Vehicle Details ->");
+                                                                    Log.d("LoginInfo", "Vehicle Number: " + vehicleNum);
+                                                                    Log.d("LoginInfo", "Car Type: " + carType);
+                                                                } else {
+                                                                    Log.d("LoginInfo", "Vehicle document not found for ID: " + vehicleId);
+                                                                }
+                                                                // Navigate to HomePage after attempting to log vehicle details
+                                                                startActivity(new Intent(LoginActivity.this, HomePage.class));
+                                                                finish(); // Finish LoginActivity
+                                                            })
+                                                            .addOnFailureListener(e -> {
+                                                                Log.e("LoginInfo", "Error fetching vehicle details: " + e.getMessage());
+                                                                // Navigate to HomePage even if vehicle details fetch fails
+                                                                startActivity(new Intent(LoginActivity.this, HomePage.class));
+                                                                finish(); // Finish LoginActivity
+                                                            });
+                                                } else {
+                                                    Log.d("LoginInfo", "No Vehicle ID associated with user.");
+                                                    // Navigate to HomePage if there's no vehicle ID
+                                                    startActivity(new Intent(LoginActivity.this, HomePage.class));
+                                                    finish(); // Finish LoginActivity
+                                                }
+                                                // The startActivity and finish calls are moved into the listeners above
+                                                // to ensure they happen after the async vehicle fetch attempt.
+
                                             } else {
                                                 Toast.makeText(LoginActivity.this, "Authentication failed: " + loginTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                             }

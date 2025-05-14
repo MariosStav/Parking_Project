@@ -1,37 +1,59 @@
-package com.example.parkhonolulu.model; // or your actual package
-
+package com.example.parkhonolulu;
 public class User {
     private String name;
-    private String email;
     private String surname;
     private String username;
+    private String email;
     private String password;
+    private String role;
+    private String uid;
+    private String vehicle;
 
     public User() {
-        // Empty constructor required for Firebase
+        // Required for Firebase
     }
 
-    public User(String name, String email, String surname, String username, String password) {
+    public User(String name, String surname, String username, String email, String role, String uid, String vehicle) {
         this.name = name;
-        this.email = email;
         this.surname = surname;
         this.username = username;
-        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.uid = uid;
+        this.vehicle = vehicle;
     }
 
-    // Add getters and setters (important for Firebase)
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    // Getters required by Firebase
+    public String getName() {
+        return name;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getSurname() {
+        return surname;
+    }
 
-    public String getSurname() { return surname; }
-    public void setSurname(String surname) { this.surname = surname; }
+    public String getUsername() {
+        return username;
+    }
 
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
+    public String getEmail() {
+        return email;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public String getRole() {
+        return role;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public String getVehicle() {
+        return vehicle;
+    }
+
+    // Getter for password is intentionally omitted as it's not set by the constructor used
+    // and storing passwords directly in Firestore documents is not recommended.
+    // If you have a specific reason to store it and set it, you can add:
+    // public String getPassword() { return password; }
 }
