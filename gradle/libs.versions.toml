@@ -12,6 +12,7 @@ navigationUi = "2.9.0"
 playServicesLocation = "21.3.0"
 playServicesMaps = "19.2.0"
 espressoIntents = "3.6.1"
+googleGmsServices = "4.4.2"
 
 [libraries]
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
@@ -32,4 +33,6 @@ espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsServices" }
 
