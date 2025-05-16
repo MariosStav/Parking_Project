@@ -106,29 +106,37 @@ public class LoginActivity extends AppCompatActivity {
                                                 if (vehicleId != null && !vehicleId.isEmpty()) {
                                                     db.collection("vehicles").document(vehicleId).get()
                                                             .addOnSuccessListener(vehicleDocument -> {
+                                                                String carType = null; // Initialize carType
                                                                 if (vehicleDocument.exists()) {
                                                                     String vehicleNum = vehicleDocument.getString("vehicleNum");
-                                                                    String carType = vehicleDocument.getString("carType");
+                                                                    carType = vehicleDocument.getString("carType"); // Get carType
                                                                     Log.d("LoginInfo", "Vehicle Details ->");
                                                                     Log.d("LoginInfo", "Vehicle Number: " + vehicleNum);
                                                                     Log.d("LoginInfo", "Car Type: " + carType);
                                                                 } else {
                                                                     Log.d("LoginInfo", "Vehicle document not found for ID: " + vehicleId);
                                                                 }
-                                                                // Navigate to HomePage after attempting to log vehicle details
-                                                                startActivity(new Intent(LoginActivity.this, HomePage.class));
+                                                                // Navigate to HomePage
+                                                                Intent intent = new Intent(LoginActivity.this, HomePage.class);
+                                                                intent.putExtra("USER_CAR_TYPE", carType); // Pass carType to HomePage
+                                                                startActivity(intent);
                                                                 finish(); // Finish LoginActivity
                                                             })
                                                             .addOnFailureListener(e -> {
                                                                 Log.e("LoginInfo", "Error fetching vehicle details: " + e.getMessage());
                                                                 // Navigate to HomePage even if vehicle details fetch fails
-                                                                startActivity(new Intent(LoginActivity.this, HomePage.class));
+                                                                Intent intent = new Intent(LoginActivity.this, HomePage.class);
+                                                                // Potentially pass null or a default value if carType couldn't be fetched
+                                                                intent.putExtra("USER_CAR_TYPE", (String) null);
+                                                                startActivity(intent);
                                                                 finish(); // Finish LoginActivity
                                                             });
                                                 } else {
                                                     Log.d("LoginInfo", "No Vehicle ID associated with user.");
                                                     // Navigate to HomePage if there's no vehicle ID
-                                                    startActivity(new Intent(LoginActivity.this, HomePage.class));
+                                                    Intent intent = new Intent(LoginActivity.this, HomePage.class);
+                                                    intent.putExtra("USER_CAR_TYPE", (String) null); // Pass null as carType
+                                                    startActivity(intent);
                                                     finish(); // Finish LoginActivity
                                                 }
                                                 // The startActivity and finish calls are moved into the listeners above
