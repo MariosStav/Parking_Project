@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.example.parkhonolulu'
-    compileSdk 35
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.parkhonolulu"
@@ -25,8 +25,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     buildFeatures {
         viewBinding true
@@ -54,5 +54,3 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 }
-
-apply plugin: 'com.google.gms.google-services'

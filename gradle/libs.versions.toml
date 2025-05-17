@@ -1,25 +1,26 @@
 [versions]
-agp = "8.10.0"
-constraintlayout = "2.2.1"
-firebaseBom = "33.13.0"
+agp = "7.4.0" # Downgraded AGP version
+# Downgraded several library versions for compatibility with AGP 7.4.0
+constraintlayout = "2.1.4" # Downgraded from 2.2.1
+firebaseBom = "32.0.0" # Downgraded from 33.13.0
 junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-appcompat = "1.7.0"
-material = "1.12.0"
-navigationFragment = "2.9.0"
-navigationUi = "2.9.0"
-playServicesLocation = "21.3.0"
-playServicesMaps = "19.2.0"
-espressoIntents = "3.6.1"
-googleGmsServices = "4.4.2"
+junitVersion = "1.2.1" # This is androidx.test.ext:junit
+espressoCore = "3.5.1" # Downgraded from 3.6.1
+appcompat = "1.6.1" # Downgraded from 1.7.0
+material = "1.9.0" # Downgraded from 1.12.0
+navigationFragment = "2.5.3" # Downgraded from 2.9.0
+navigationUi = "2.5.3" # Downgraded from 2.9.0
+playServicesLocation = "21.0.1" # Downgraded from 21.3.0
+playServicesMaps = "18.1.0" # Downgraded from 19.2.0
+espressoIntents = "3.5.1" # Downgraded from 3.6.1
+googleGmsServices = "4.3.15" # Updated for compatibility with AGP 7.4.0
 
 [libraries]
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
-firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" } # Version managed by BOM
+firebase-auth = { module = "com.google.firebase:firebase-auth" } # Version managed by BOM
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" } # Version managed by BOM
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

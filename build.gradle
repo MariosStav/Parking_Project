@@ -1,13 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    dependencies {
-        classpath 'com.google.gms:google-services:4.4.2'
-    }
-}
+// buildscript block removed as dependencies are managed by version catalog
 
 plugins {
     alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.android.library) apply false // Updated to use alias
-
-    alias(libs.plugins.google.gms.google.services) apply false // Updated to use alias
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.google.gms.google.services) apply false // Ensure this alias matches the TOML key
 }
