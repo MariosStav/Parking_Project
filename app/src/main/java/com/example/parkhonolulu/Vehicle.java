@@ -5,7 +5,7 @@ public class Vehicle {
     private String carType;
 
     public Vehicle() {
-        // Required for Firebase
+        // Firestore needs a public no-arg constructor
     }
 
     public Vehicle(String vehicleNum, String carType) {
@@ -17,7 +17,16 @@ public class Vehicle {
         return vehicleNum;
     }
 
+    public void setVehicleNum(String vehicleNum) {
+        this.vehicleNum = vehicleNum;
+    }
+
     public String getCarType() {
         return carType;
     }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
 }
+

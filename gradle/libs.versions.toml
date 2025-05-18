@@ -1,6 +1,7 @@
 [versions]
 agp = "7.4.0" # Downgraded AGP version
 # Downgraded several library versions for compatibility with AGP 7.4.0
+androidMail = "1.6.7"
 constraintlayout = "2.1.4" # Downgraded from 2.2.1
 firebaseBom = "32.0.0" # Downgraded from 33.13.0
 junit = "4.13.2"
@@ -16,6 +17,8 @@ espressoIntents = "3.5.1" # Downgraded from 3.6.1
 googleGmsServices = "4.3.15" # Updated for compatibility with AGP 7.4.0
 
 [libraries]
+android-activation = { module = "com.sun.mail:android-activation", version.ref = "androidMail" }
+android-mail = { module = "com.sun.mail:android-mail", version.ref = "androidMail" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" } # Version managed by BOM
 firebase-auth = { module = "com.google.firebase:firebase-auth" } # Version managed by BOM

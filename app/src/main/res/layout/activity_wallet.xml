@@ -1,0 +1,85 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white"> <!-- Add background color -->
+
+    <!-- Frame Container -->
+    <LinearLayout
+        android:id="@+id/frame_container"
+        android:layout_width="wrap_content"
+        android:layout_height="657dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="90dp"
+        android:background="@drawable/roundstyle"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- Balance -->
+        <TextView
+            android:id="@+id/balanceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:paddingBottom="24dp"
+            android:background="@drawable/borders"
+            android:text="Balance: €0.00"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <!-- Amount -->
+        <EditText
+            android:id="@+id/amountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/borders"
+            android:gravity="center"
+            android:hint="Amount: (€)"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            android:padding="16dp"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <!--Layout to place the buttons on the same level-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="120dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="19dp">
+
+
+            <!-- Payment Button -->
+            <Button
+                android:id="@+id/payParkingButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_border"
+                android:backgroundTint="@color/dark_blue"
+                android:padding="16dp"
+                android:text="Payment"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/transactionsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:importantForAccessibility="no" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -5,6 +5,7 @@ plugins {
 
 android {
     namespace 'com.example.parkhonolulu'
+    //noinspection GradleDependency
     compileSdk 33
 
     defaultConfig {
@@ -31,9 +32,16 @@ android {
     buildFeatures {
         viewBinding true
     }
+    packagingOptions {
+        resources.excludes.add("META-INF/NOTICE.md")
+        resources.excludes.add("META-INF/LICENSE.md")
+    }
 }
 
 dependencies {
+
+    implementation libs.android.mail
+    implementation libs.android.activation
 
     implementation libs.play.services.maps
     implementation libs.play.services.location

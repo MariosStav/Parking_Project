@@ -1,0 +1,187 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/unpark1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:startColor="#FFD54F"
+    android:endColor="#FF7043"
+    android:angle="45"
+    android:background="@color/white">
+
+    <!-- Frame Container -->
+    <LinearLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="260dp"
+        android:background="@drawable/roundstyle"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Cost Explanation Text-->
+        <TextView
+            android:id="@+id/costs_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/button_border"
+            android:drawableEnd="@drawable/baseline_directions_car_24"
+            android:drawablePadding="8dp"
+            android:padding="16dp"
+            android:text="Parking Cost Per Hour: "
+            android:textColor="@color/navy"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+
+        <!-- Parking Cost Table -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:stretchColumns="1"
+            android:background="@drawable/roundstyle"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:stretchColumns="1"
+            android:backgroundTint="#E3F2FD"
+            android:padding="8dp"
+            android:background="@drawable/roundstyle">
+
+            <!-- Header Row -->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Hours"
+                    android:textColor="@android:color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:background="@drawable/table_border" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="8dp"
+                    android:text="Cost"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/table_border"/>
+            </TableRow>
+
+            <!-- First Hour -->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="First Hour:"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:background="@drawable/table_border"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="8dp"
+                    android:text="5$"
+                    android:background="@drawable/table_border"
+                    android:textColor="#000000"
+                    android:textSize="20sp"/>
+            </TableRow>
+
+            <!-- 2-5 Hours -->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="2-5 Hours:"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:background="@drawable/table_border"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="8dp"
+                    android:text="10$"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:background="@drawable/table_border"/>
+            </TableRow>
+
+            <!-- 5+ Hours -->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="For Every Next Hour:"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:background="@drawable/table_border"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="8dp"
+                    android:text="+2$"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:background="@drawable/table_border"/>
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+
+    <!--Unpark Button -->
+    <Button
+        android:id="@+id/unpark_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="542dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginBottom="134dp"
+        android:background="@drawable/button_border"
+        android:backgroundTint="@color/dark_blue"
+        android:text="Unpark"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.74" />
+
+
+</RelativeLayout>

@@ -9,6 +9,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="twilio_account_sid">YourTwilioAccountSID</string>
+    <string name="twilio_auth_token">YourTwilioAuthToken</string>
+    <string name="twilio_phone_number">YourTwilioPhoneNumber</string>
     <string-array name="car_types">
         <item>Electric</item>
         <item>Gas</item>

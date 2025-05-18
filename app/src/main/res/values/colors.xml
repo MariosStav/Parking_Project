@@ -9,5 +9,20 @@
     <color name="white">#FFFFFFFF</color>
     <color name="pastel_yellow">#FFFFE0</color>
     <color name="pastel_green">#90EE90</color>
-    <color name="parking_orange_fallback">#FFA500</color> <!-- Orange for "Other" in legend -->
+    <color name="parking_orange_fallback">#FFA500</color>
+    <color name="apricot">#FBCEB1</color>
+    <color name="coral">#FF7F50</color>
+    <color name="blue">  #0000FF</color>
+    <color name="table_blue">#E3F2FD</color>
+    <color name="baby_blue">#C2E6F7</color>
+    <color name="dark_blue">#00008B</color>
+    <color name="iris">#5D3FD3</color>
+    <color name="holo_orange_light">#ffffbb33</color>
+    <color name="sunset">#FA5F55</color>
+    <color name="cinnamon">    #D27D2D</color>
+    <color name="grey">#808080</color>
+    <color name="khaki">#F0E68C</color>
+    <color name="gold">    #FFD700</color>
+    <color name="navy">#000080</color>
+    <color name="lilac">#C8A2C8</color>
 </resources>
