@@ -53,6 +53,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".HomeDrawerActivity" />
     </application>
 
 </manifest>

@@ -89,8 +89,8 @@ public class LoginActivity extends AppCompatActivity {
                                                 Toast.makeText(LoginActivity.this, "Welcome, " + username, Toast.LENGTH_SHORT).show();
                                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                                 if (user != null) {
-                                                    // Proceed to home page if user is already logged in
-                                                    startActivity(new Intent(LoginActivity.this, HomePage.class));
+                                                    // Proceed to home drawer page if user is already logged in
+                                                    startActivity(new Intent(LoginActivity.this, HomeDrawerActivity.class));
                                                 }
 
                                             } else {

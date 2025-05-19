@@ -17,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends BaseDrawerActivity implements OnMapReadyCallback {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth auth;
@@ -30,14 +30,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        auth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setupDrawer(R.layout.drawer_base);
+        getLayoutInflater().inflate(R.layout.activity_maps, findViewById(R.id.content_frame), true);
+        auth = FirebaseAuth.getInstance();
 
         // Initialize the map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
     }
 
     @Override
@@ -75,7 +78,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     db.collection("vehicles").document(vehicleId).get().addOnSuccessListener(vehicleDoc -> {
                         if (vehicleDoc.exists()) {
                             currentUserCarType = vehicleDoc.getString("carType");
-                            Log.d("MapsActivity", "Current user\'s car type: " + currentUserCarType);
+                            Log.d("MapsActivity", "Current user's car type: " + currentUserCarType);
                             loadParkingSpots(); // ✅ ΤΩΡΑ φορτώνουμε τα spots
                         } else {
                             Log.w("MapsActivity", "Vehicle not found.");
@@ -86,10 +89,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Toast.makeText(this, "Σφάλμα κατά τη φόρτωση οχήματος.", Toast.LENGTH_SHORT).show();
                     });
                 } else {
-                    Log.w("MapsActivity", "Vehicle ID is null or empty. Loading all parking spots.");
-                    Toast.makeText(this, "Δεν έχει οριστεί όχημα. Εμφανίζονται όλες οι διαθέσιμες θέσεις.", Toast.LENGTH_LONG).show();
-                    currentUserCarType = null; // Ensure car type is treated as unknown
-                    loadParkingSpots(); // Attempt to load all parking spots
+                    Log.w("MapsActivity", "Vehicle ID is null or empty.");
+                    Toast.makeText(this, "Το όχημα δεν έχει οριστεί.", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Log.w("MapsActivity", "User document does not exist.");
@@ -156,7 +157,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         .position(position)
                                         .title(name)
                                         .icon(BitmapDescriptorFactory.defaultMarker(color)));
-                                Log.d("MapsActivity", "Added marker for: " + name + " at " + position.latitude + "," + position.longitude);
                             }
                         }
                     }
