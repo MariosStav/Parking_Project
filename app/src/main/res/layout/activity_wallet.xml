@@ -1,36 +1,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@android:color/white"> <!-- Add background color -->
+    android:background="@drawable/background_white"
+    android:orientation="vertical"
+    android:padding="16dp"> <!-- Add background color -->
 
     <!-- Frame Container -->
     <LinearLayout
         android:id="@+id/frame_container"
-        android:layout_width="wrap_content"
-        android:layout_height="657dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="379dp"
+        android:layout_height="480dp"
+        android:layout_marginTop="100dp"
         android:layout_marginBottom="90dp"
-        android:background="@drawable/roundstyle"
-        android:gravity="center_horizontal"
+        android:background="@drawable/table_border"
+        android:backgroundTint="#00D5ACAC"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
 
         <!-- Balance -->
+
+        <!-- Amount -->
         <TextView
             android:id="@+id/balanceTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:gravity="center"
-            android:paddingBottom="24dp"
             android:background="@drawable/borders"
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="Balance: €0.00"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
-        <!-- Amount -->
         <EditText
             android:id="@+id/amountEditText"
             android:layout_width="match_parent"
@@ -41,7 +45,8 @@
             android:hint="Amount: (€)"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
-            android:padding="16dp"
+            android:padding="10dp"
+            android:paddingTop="10dp"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
@@ -60,17 +65,18 @@
             <!-- Payment Button -->
             <Button
                 android:id="@+id/payParkingButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/button_border"
-                android:backgroundTint="@color/dark_blue"
-                android:padding="16dp"
+                android:backgroundTint="@color/blue"
+                android:fontFamily="sans-serif-medium"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:text="Payment"
                 android:textColor="@color/white"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="normal|bold" />
         </LinearLayout>
 
 

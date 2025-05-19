@@ -1,21 +1,25 @@
 package com.example.parkhonolulu;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
     private String name;
     private String email;
     private String surname;
     private String username;
     private String password;
-
     private String vehicleid;
 
-    public String getVehicleid() {
-        return vehicleid;
-    }
-
-    public void setVehicleid(String vehicleid) {
-        this.vehicleid = vehicleid;
-    }
+    private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final String COLLECTION_NAME = "users";
 
     public User() {
         // Empty constructor required for Firebase
@@ -30,19 +34,122 @@ public class User {
         this.vehicleid = vehicleid;
     }
 
-    // Add getters and setters (important for Firebase)
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    // Helper to get current UID safely
+    private static String getCurrentUid() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        return currentUser != null ? currentUser.getUid() : null;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    // Generic method to get a specific field from Firestore for current user
+    private static void getField(String fieldName, OnSuccessListener<Object> onSuccess, OnFailureListener onFailure) {
+        String uid = getCurrentUid();
+        if (uid == null) {
+            onFailure.onFailure(new Exception("User not logged in"));
+            return;
+        }
 
-    public String getSurname() { return surname; }
-    public void setSurname(String surname) { this.surname = surname; }
+        db.collection(COLLECTION_NAME).document(uid).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Object value = documentSnapshot.get(fieldName);
+                        onSuccess.onSuccess(value);
+                    } else {
+                        onFailure.onFailure(new Exception("User document not found"));
+                    }
+                })
+                .addOnFailureListener(onFailure);
+    }
 
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
+    // Async getter for name
+    public static void fetchName(OnSuccessListener<String> onSuccess, OnFailureListener onFailure) {
+        getField("name",
+                value -> onSuccess.onSuccess(value != null ? (String) value : null),
+                onFailure);
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    // Async getter for email
+    public static void fetchEmail(OnSuccessListener<String> onSuccess, OnFailureListener onFailure) {
+        getField("email",
+                value -> onSuccess.onSuccess(value != null ? (String) value : null),
+                onFailure);
+    }
+
+    // Async getter for surname
+    public static void fetchSurname(OnSuccessListener<String> onSuccess, OnFailureListener onFailure) {
+        getField("surname",
+                value -> onSuccess.onSuccess(value != null ? (String) value : null),
+                onFailure);
+    }
+
+    // Async getter for username
+    public static void fetchUsername(OnSuccessListener<String> onSuccess, OnFailureListener onFailure) {
+        getField("username",
+                value -> onSuccess.onSuccess(value != null ? (String) value : null),
+                onFailure);
+    }
+
+    // Async getter for password (usually not recommended to retrieve plain password)
+    public static void fetchPassword(OnSuccessListener<String> onSuccess, OnFailureListener onFailure) {
+        getField("password",
+                value -> onSuccess.onSuccess(value != null ? (String) value : null),
+                onFailure);
+    }
+
+    // Async getter for vehicleid
+    public static void fetchVehicleid(OnSuccessListener<String> onSuccess, OnFailureListener onFailure) {
+        getField("vehicleid",
+                value -> onSuccess.onSuccess(value != null ? (String) value : null),
+                onFailure);
+    }
+
+    // Save the user using current Firebase UID
+    public void saveToDatabase(OnSuccessListener<Void> onSuccess, OnFailureListener onFailure) {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("name", name);
+        userData.put("email", email);
+        userData.put("surname", surname);
+        userData.put("username", username);
+        userData.put("password", password);
+        userData.put("vehicleid", vehicleid);
+
+        db.collection(COLLECTION_NAME).document(uid)
+                .set(userData)
+                .addOnSuccessListener(onSuccess)
+                .addOnFailureListener(onFailure);
+    }
+
+    public static void loginWithUsername(String username, String password,
+                                         OnSuccessListener<FirebaseUser> onSuccess,
+                                         OnFailureListener onFailure) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        db.collection("users")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String email = document.getString("email");
+
+                            auth.signInWithEmailAndPassword(email, password)
+                                    .addOnSuccessListener(authResult -> {
+                                        FirebaseUser user = authResult.getUser();
+                                        if (user != null) {
+                                            onSuccess.onSuccess(user);
+                                        } else {
+                                            onFailure.onFailure(new Exception("Login failed"));
+                                        }
+                                    })
+                                    .addOnFailureListener(onFailure);
+                            break;
+                        }
+                    } else {
+                        onFailure.onFailure(new Exception("Username not found"));
+                    }
+                })
+                .addOnFailureListener(onFailure);
+    }
 }

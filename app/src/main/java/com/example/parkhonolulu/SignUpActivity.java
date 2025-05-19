@@ -8,21 +8,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.auth.FirebaseAuth;
-
-
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignUpActivity extends AppCompatActivity {
     private Button signUpButton;
     private FirebaseAuth auth;
 
-    private FirebaseFirestore db;
-    private EditText nameEditText, emailEditText, surnameEditText, usernameEditText, passwordEditText, vehicleidEditText;
+    private EditText nameEditText, emailEditText, surnameEditText, usernameEditText, passwordEditText;
     private Spinner carTypeSpinner;
 
     @Override
@@ -32,9 +27,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        // Initialize Firestore
-        db = FirebaseFirestore.getInstance();
-
         // Find views by their ID
         signUpButton = findViewById(R.id.signup);
         nameEditText = findViewById(R.id.editTextTextPersonName);
@@ -43,7 +35,6 @@ public class SignUpActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.editTextTextPersonName4);
         passwordEditText = findViewById(R.id.editTextTextPassword);
         carTypeSpinner = findViewById(R.id.spinner);
-        vehicleidEditText = findViewById(R.id.editTextTextPersonName3);
 
         // Setup the spinner with car types
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -66,54 +57,26 @@ public class SignUpActivity extends AppCompatActivity {
 
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnSuccessListener(authResult -> {
-                        // 1️⃣ Φτιάξε πρώτα το όχημα
-                        Vehicle newVehicle = new Vehicle("", carType); // προσωρινό κενό vehicleNum
-                        db.collection("vehicles").add(newVehicle)
-                                .addOnSuccessListener(vehicleRef -> {
-                                    String vehicleDocId = vehicleRef.getId();
-
-                                    // 2️⃣ Φτιάξε τώρα τον user με σωστό vehicleid
-                                    User newUser = new User(name, email, surname, username, password, vehicleDocId);
-                                    addUserToFirestore(newUser);
-
-                                    // 3️⃣ (προαιρετικό) ενημέρωσε το όχημα με vehicleNum = vehicleDocId
-                                    vehicleRef.update("vehicleNum", vehicleDocId);
-                                })
-                                .addOnFailureListener(e -> {
-                                    Toast.makeText(SignUpActivity.this, "Error adding vehicle: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                });
+                        // Create vehicle and save to Firestore
+                        Vehicle newVehicle = new Vehicle("", carType);
+                        newVehicle.saveToDatabaseWithAutoId(vehicleId -> {
+                            // Create user with vehicle ID
+                            User newUser = new User(name, email, surname, username, password, vehicleId);
+                            newUser.saveToDatabase(aVoid -> {
+                                // Success: Go to LoginActivity
+                                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }, e -> {
+                                Toast.makeText(SignUpActivity.this, "Error adding user: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                        }, e -> {
+                            Toast.makeText(SignUpActivity.this, "Error adding vehicle: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(SignUpActivity.this, "Sign up failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         });
     }
-
-    private void addUserToFirestore(User user) {
-        String uid = auth.getCurrentUser().getUid(); // get UID of newly created user
-        db.collection("users").document(uid).set(user)
-                .addOnSuccessListener(aVoid -> {
-                    // Success: Go to LoginActivity
-                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(SignUpActivity.this, "Error adding user: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
-
-
-    private void addVehicleToFirestore(Vehicle vehicle) {
-        CollectionReference vehiclesRef = db.collection("vehicles");
-
-        vehiclesRef.add(vehicle)
-                .addOnSuccessListener(documentReference -> {
-                    //Toast.makeText(SignUpActivity.this, "Vehicle added successfully", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(SignUpActivity.this, "Error adding vehicle: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
-
 }

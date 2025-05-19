@@ -25,6 +25,9 @@
             android:name=".HomePage"
             android:exported="false" />
         <activity
+            android:name=".AddManagerActivity"
+            android:exported="false" />
+        <activity
             android:name=".WalletActivity"
             android:exported="false" />
         <activity
@@ -53,7 +56,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".HomeDrawerActivity" />
     </application>
 
 </manifest>

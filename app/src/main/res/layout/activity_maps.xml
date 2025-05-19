@@ -72,15 +72,34 @@
                 android:gravity="center_vertical"
                 android:layout_marginStart="16dp"
                 android:paddingVertical="4dp">
+
                 <View
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@color/parking_orange_fallback"
-                    android:layout_marginEnd="8dp"/>
+                    android:background="@android:color/holo_red_dark"
+                    android:layout_marginEnd="8dp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Other"
+                    android:text="Unavailable"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:paddingVertical="4dp">
+
+                <CheckBox
+                    android:id="@+id/unavailableCheckbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show unavailable park spots"
                     android:textSize="14sp"
                     android:textColor="@android:color/black"/>
             </LinearLayout>
@@ -95,15 +114,30 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/legendCard"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/parkHereButton">
+
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MapsActivity" />
+
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/parkHereButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Park Here"
+        android:textColor="#1E3A5F"
+        android:enabled="false"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/mapContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

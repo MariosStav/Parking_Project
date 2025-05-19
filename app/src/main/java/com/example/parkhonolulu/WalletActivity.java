@@ -2,12 +2,14 @@ package com.example.parkhonolulu;
 
 import android.os.Bundle;
 
-public class WalletActivity extends BaseDrawerActivity {
+import androidx.appcompat.app.AppCompatActivity;
 
-    @Override
+public class WalletActivity extends AppCompatActivity {
+
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setupDrawer(R.layout.drawer_base);
-        getLayoutInflater().inflate(R.layout.activity_wallet, findViewById(R.id.content_frame), true);
+        setContentView(R.layout.activity_wallet);
+
     }
 }

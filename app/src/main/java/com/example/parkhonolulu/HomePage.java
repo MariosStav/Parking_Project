@@ -11,7 +11,6 @@ public class HomePage extends AppCompatActivity {
 
     private Button LookUpButton;
     private Button CompletePark;
-
     private Button Wallet;
 
     @Override
@@ -20,6 +19,8 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         LookUpButton = findViewById(R.id.anazitisi);
+        CompletePark = findViewById(R.id.completepark);
+        Wallet = findViewById(R.id.wallet);
 
         LookUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,8 +30,6 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-        CompletePark = findViewById(R.id.completepark);
-
         CompletePark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,8 +37,6 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        Wallet = findViewById(R.id.wallet);
 
         Wallet.setOnClickListener(new View.OnClickListener() {
             @Override
