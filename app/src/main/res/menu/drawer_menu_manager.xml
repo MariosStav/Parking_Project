@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_add_manager"
+            android:icon="@drawable/ic_person_add"
+            android:title="Add Manager" />
+        <item
+            android:id="@+id/nav_manager_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Logout" />
+    </group>
+</menu>

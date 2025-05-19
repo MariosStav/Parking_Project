@@ -25,4 +25,8 @@
     <color name="gold">    #FFD700</color>
     <color name="navy">#000080</color>
     <color name="lilac">#C8A2C8</color>
+    <color name="nav_item_selected">#5B05DEFA</color>
+    <color name="nav_item_default">#FFFFFF</color>
+    <color name="nav_icon_tint">#1E3A5F</color>
+    <color name="nav_icon_tint_selected">#FFFFFF</color>
 </resources>

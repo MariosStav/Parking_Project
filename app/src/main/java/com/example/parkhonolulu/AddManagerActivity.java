@@ -8,17 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class AddManagerActivity extends AppCompatActivity {
+public class AddManagerActivity extends BaseManagerDrawerActivity {
     private EditText emailEditText, passwordEditText, phoneEditText, nameEditText, surnameEditText;
     private Button addManagerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addmanager);
-
+        setupManagerDrawer(R.layout.drawer_base_manager);
+        getLayoutInflater().inflate(R.layout.activity_addmanager, findViewById(R.id.content_frame), true);
 
         emailEditText = findViewById(R.id.manageremail);
         passwordEditText = findViewById(R.id.managerpassword);
@@ -46,8 +44,9 @@ public class AddManagerActivity extends AppCompatActivity {
                 newManager.registerNewManager(
                         unused -> {
                             Toast.makeText(AddManagerActivity.this, "Ο διαχειριστής προστέθηκε με επιτυχία", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(AddManagerActivity.this, ManagerHomePage.class);
+                            Intent intent = new Intent(AddManagerActivity.this, ManagerHomeDrawerActivity.class);
                             startActivity(intent);
+                            finish();
                         },
                         e -> Toast.makeText(AddManagerActivity.this, "Σφάλμα: " + e.getMessage(), Toast.LENGTH_LONG).show()
                 );

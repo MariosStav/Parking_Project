@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ManagerHomePage" xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Main content area for ManagerHomePage -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- Include the specific content for ManagerHomePage -->
+        <include layout="@layout/activity_manager_home_page" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Navigation drawer for Manager -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_main_manager"
+        app:menu="@menu/drawer_menu_manager"
+        app:itemIconTint="@color/nav_icon_tint_selector"
+        app:itemTextColor="@android:color/black"
+        android:background="@drawable/nav_header_gradient" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

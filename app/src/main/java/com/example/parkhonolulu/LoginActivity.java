@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     user -> {
                         loadingProgressBar.setVisibility(View.GONE);
                         Toast.makeText(LoginActivity.this, "Welcome, " + username, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, HomePage.class));
+                        startActivity(new Intent(LoginActivity.this, HomeDrawerActivity.class));
                         finish();
                     },
                     e -> {

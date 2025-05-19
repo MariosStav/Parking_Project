@@ -21,6 +21,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBC5Uapa-TbG_hJ4eXv1v0BPR9aeMUXPiE" />
+        <activity android:name=".HomeDrawerActivity"/>
+        <activity android:name=".ManagerHomeDrawerActivity"/>
         <activity
             android:name=".HomePage"
             android:exported="false" />

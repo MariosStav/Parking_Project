@@ -2,14 +2,12 @@ package com.example.parkhonolulu;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+public class UnparkActvity extends BaseDrawerActivity {
 
-public class UnparkActvity extends AppCompatActivity {
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_unpark);
-
+        setupDrawer(R.layout.drawer_base);
+        getLayoutInflater().inflate(R.layout.activity_unpark, findViewById(R.id.content_frame), true);
     }
 }

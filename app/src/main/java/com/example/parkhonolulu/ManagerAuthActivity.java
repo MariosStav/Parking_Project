@@ -71,8 +71,8 @@ public class ManagerAuthActivity extends AppCompatActivity {
 
         if (enteredOtp.equals(otp)) {
             Toast.makeText(this, "OTP verified successfully!", Toast.LENGTH_SHORT).show();
-            Log.d("ManagerAuthActivity", "OTP verification successful, starting ManagerHomePage.");
-            startActivity(new Intent(ManagerAuthActivity.this, ManagerHomePage.class));
+            Log.d("ManagerAuthActivity", "OTP verification successful, starting ManagerHomeDrawerActivity."); // Changed Log
+            startActivity(new Intent(ManagerAuthActivity.this, ManagerHomeDrawerActivity.class)); // Changed to ManagerHomeDrawerActivity
             finish();
         } else {
             Toast.makeText(this, "OTP verification failed.", Toast.LENGTH_SHORT).show();
