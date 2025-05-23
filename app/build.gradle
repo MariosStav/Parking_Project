@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'
 
     implementation libs.android.mail
     implementation libs.android.activation

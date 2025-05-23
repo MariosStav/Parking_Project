@@ -22,7 +22,7 @@
         android:layout_marginBottom="64dp"
         android:backgroundTint="#807AB1AD"
         android:enabled="true"
-        android:text="SIGN IN"
+        android:text="SIGN UP"
         android:textColor="#000000"
         app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -160,5 +160,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/logo_diafano" />
+
+    <Button
+        android:id="@+id/forgotpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#5B000000"
+        android:text="FORGOT PASSWORD"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#82A09C"
+        app:iconTint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login"
+        app:layout_constraintVertical_bias="0.218" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

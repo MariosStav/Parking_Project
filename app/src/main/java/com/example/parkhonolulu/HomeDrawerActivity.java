@@ -5,37 +5,78 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
+
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeDrawerActivity extends BaseDrawerActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Button LookUpButton;
+    private Button CompletePark;
+    private Button Wallet;
+    private Button EditProfile;
+    private Button Statistics;
+    private Button Mypark;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupDrawer(R.layout.drawer_base);
         getLayoutInflater().inflate(R.layout.activity_home_page, findViewById(R.id.content_frame), true);
-        // Set up home page button listeners
-        Button lookUpButton = findViewById(R.id.anazitisi);
-        Button completePark = findViewById(R.id.completepark);
-        Button wallet = findViewById(R.id.wallet);
-        lookUpButton.setOnClickListener(new View.OnClickListener() {
+
+        LookUpButton = findViewById(R.id.anazitisi);
+        CompletePark = findViewById(R.id.completepark);
+        Wallet = findViewById(R.id.wallet);
+        EditProfile = findViewById(R.id.profile2);
+        Statistics = findViewById(R.id.statistika);
+        Mypark = findViewById(R.id.activepark);
+
+        Mypark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeDrawerActivity.this, MapsActivity.class));
+                Intent intent = new Intent(HomeDrawerActivity.this, MyparklocationActivity.class);
+                startActivity(intent);
             }
         });
-        completePark.setOnClickListener(new View.OnClickListener() {
+
+        LookUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeDrawerActivity.this, UnparkActvity.class));
+                Intent intent = new Intent(HomeDrawerActivity.this, MapsActivity.class);
+                startActivity(intent);
             }
         });
-        wallet.setOnClickListener(new View.OnClickListener() {
+
+        CompletePark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeDrawerActivity.this, WalletActivity.class));
+                Intent intent = new Intent(HomeDrawerActivity.this, UnparkActvity.class);
+                startActivity(intent);
+            }
+        });
+
+        EditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeDrawerActivity.this, EditUserActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Statistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeDrawerActivity.this, UserStatisticsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Wallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeDrawerActivity.this, WalletActivity.class);
+                startActivity(intent);
             }
         });
     }

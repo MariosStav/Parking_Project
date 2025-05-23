@@ -20,7 +20,7 @@ public class AddManagerActivity extends BaseManagerDrawerActivity {
 
         emailEditText = findViewById(R.id.manageremail);
         passwordEditText = findViewById(R.id.managerpassword);
-        phoneEditText = findViewById(R.id.managerphone);
+        phoneEditText = findViewById(R.id.vehicleNum);
         nameEditText = findViewById(R.id.managername);
         surnameEditText = findViewById(R.id.managersurname);
 
@@ -37,18 +37,17 @@ public class AddManagerActivity extends BaseManagerDrawerActivity {
                 String surname = surnameEditText.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                    Toast.makeText(AddManagerActivity.this, "Email και κωδικός απαιτούνται", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddManagerActivity.this, "Email and password are required", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Manager newManager = new Manager(name, surname, email, password, phone);
                 newManager.registerNewManager(
                         unused -> {
-                            Toast.makeText(AddManagerActivity.this, "Ο διαχειριστής προστέθηκε με επιτυχία", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddManagerActivity.this, "The manager was added successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(AddManagerActivity.this, ManagerHomeDrawerActivity.class);
                             startActivity(intent);
-                            finish();
                         },
-                        e -> Toast.makeText(AddManagerActivity.this, "Σφάλμα: " + e.getMessage(), Toast.LENGTH_LONG).show()
+                        e -> Toast.makeText(AddManagerActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show()
                 );
             }
         });

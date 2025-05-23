@@ -29,4 +29,5 @@
     <color name="nav_item_default">#FFFFFF</color>
     <color name="nav_icon_tint">#1E3A5F</color>
     <color name="nav_icon_tint_selected">#FFFFFF</color>
+    <color name="HUE_YELLOW">#FFF176</color>
 </resources>

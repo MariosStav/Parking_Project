@@ -4,6 +4,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -102,24 +103,6 @@ public class User {
                 onFailure);
     }
 
-    // Save the user using current Firebase UID
-    public void saveToDatabase(OnSuccessListener<Void> onSuccess, OnFailureListener onFailure) {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        Map<String, Object> userData = new HashMap<>();
-        userData.put("name", name);
-        userData.put("email", email);
-        userData.put("surname", surname);
-        userData.put("username", username);
-        userData.put("password", password);
-        userData.put("vehicleid", vehicleid);
-
-        db.collection(COLLECTION_NAME).document(uid)
-                .set(userData)
-                .addOnSuccessListener(onSuccess)
-                .addOnFailureListener(onFailure);
-    }
-
     public static void loginWithUsername(String username, String password,
                                          OnSuccessListener<FirebaseUser> onSuccess,
                                          OnFailureListener onFailure) {
@@ -152,4 +135,108 @@ public class User {
                 })
                 .addOnFailureListener(onFailure);
     }
+
+    // Fetch entire User object from Firestore
+    public static void fetchCurrentUser(OnSuccessListener<User> onSuccess, OnFailureListener onFailure) {
+        String uid = FirebaseAuth.getInstance().getCurrentUser() != null ?
+                FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
+
+        if (uid == null) {
+            onFailure.onFailure(new Exception("User not logged in"));
+            return;
+        }
+
+        db.collection(COLLECTION_NAME).document(uid).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        User user = documentSnapshot.toObject(User.class);
+                        onSuccess.onSuccess(user);
+                    } else {
+                        onFailure.onFailure(new Exception("User document not found"));
+                    }
+                })
+                .addOnFailureListener(onFailure);
+    }
+
+    public static void register(String name, String email, String surname, String username, String password,
+                                String vehicleNum, String carType,
+                                OnSuccessListener<Void> onSuccess, OnFailureListener onFailure) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> {
+                    // Step 1: Create Vehicle with auto-generated ID
+                    Vehicle newVehicle = new Vehicle(vehicleNum, carType);
+                    newVehicle.saveToDatabaseWithAutoId(vehicleId -> {
+                        // Step 2: Create User with vehicleId from newly created vehicle doc
+                        User newUser = new User(name, email, surname, username, password, vehicleId);
+
+                        // Step 3: Save User with FirebaseAuth UID
+                        newUser.saveToDatabase(aVoid -> {
+                            // Step 4: Create initial balance record for user
+                            String uid = authResult.getUser().getUid();
+                            Balance.createInitialBalance(uid, onSuccess, onFailure);
+                        }, onFailure);
+                    }, onFailure);
+                })
+                .addOnFailureListener(onFailure);
+    }
+
+    // Save user data to Firestore
+    public void saveToDatabase(OnSuccessListener<Void> onSuccess, OnFailureListener onFailure) {
+        String uid = FirebaseAuth.getInstance().getCurrentUser() != null ?
+                FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
+
+        if (uid == null) {
+            onFailure.onFailure(new Exception("User not logged in"));
+            return;
+        }
+
+        db.collection(COLLECTION_NAME).document(uid)
+                .set(this) // save whole user object as map
+                .addOnSuccessListener(onSuccess)
+                .addOnFailureListener(onFailure);
+    }
+
+    public static String getCurrentUserId() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    public static DocumentReference getUserRef() {
+        return FirebaseFirestore.getInstance().collection("users").document(getCurrentUserId());
+    }
+
+    public static void fetchVehicleRef(OnVehicleRefFetched listener, OnVehicleRefFetchError errorListener) {
+        getUserRef().get().addOnSuccessListener(documentSnapshot -> {
+            String vehicleId = documentSnapshot.getString("vehicleid");
+            if (vehicleId != null) {
+                DocumentReference vehicleRef = FirebaseFirestore.getInstance()
+                        .collection("vehicles").document(vehicleId);
+                listener.onVehicleRefFetched(vehicleRef);
+            } else {
+                errorListener.onError(new Exception("vehicleid is null"));
+            }
+        }).addOnFailureListener(errorListener::onError);
+    }
+
+    public interface OnVehicleRefFetched {
+        void onVehicleRefFetched(DocumentReference vehicleRef);
+    }
+
+    public interface OnVehicleRefFetchError {
+        void onError(Exception e);
+    }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getSurname() { return surname; }
+    public void setSurname(String surname) { this.surname = surname; }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+    public String getVehicleid() { return vehicleid; }
+    public void setVehicleid(String vehicleid) { this.vehicleid = vehicleid; }
 }

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background">
 
     <EditText
-        android:id="@+id/managerphone"
+        android:id="@+id/vehicleNum"
         android:layout_width="350dp"
         android:layout_height="41dp"
         android:layout_marginBottom="284dp"
@@ -50,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Phone Number:"
-        app:layout_constraintBottom_toTopOf="@+id/managerphone"
+        app:layout_constraintBottom_toTopOf="@+id/vehicleNum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="parent" />

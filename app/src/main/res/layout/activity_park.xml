@@ -1,147 +1,89 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pa"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_white"
     android:padding="16dp">
+
+    <TextView
+        android:id="@+id/selectedSpotInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#9F233C78"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Selected spot: ... "
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <!-- Electric Cost Image -->
+
+    <!-- Gas Cost Image -->
 
     <TextView
         android:id="@+id/securityDepositNotice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:background="#FFE6E6E6"
+        android:background="#9F233C78"
         android:gravity="center"
         android:padding="12dp"
-        android:text="Όταν παρκάρει κάποιος, κρατούνται 25 δολάρια σαν ασφάλεια"
-        android:textColor="#000000"
+        android:text="A $20 deposit is held as security when you park."
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/priceTable"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TableLayout
-        android:id="@+id/priceTable"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/roundstyle"
-        android:padding="8dp"
-        android:stretchColumns="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.653">
+        app:layout_constraintTop_toBottomOf="@id/selectedSpotInfo"
+        app:layout_constraintVertical_bias="0.029" />
 
-        <!-- Header Row -->
-        <TableRow>
+    <ImageView
+        android:id="@+id/electriccost"
+        android:layout_width="290dp"
+        android:layout_height="288dp"
+        android:contentDescription="Electric cost chart"
+        android:src="@drawable/electriccost"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/securityDepositNotice"
+        app:layout_constraintVertical_bias="0.159" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_border"
-                android:padding="8dp"
-                android:text="Hours"
-                android:textAllCaps="true"
-                android:textColor="@android:color/black"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_border"
-                android:gravity="end"
-                android:padding="8dp"
-                android:text="Cost"
-                android:textAllCaps="true"
-                android:textColor="@android:color/black"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-        </TableRow>
-
-        <!-- First Hour -->
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_border"
-                android:padding="8dp"
-                android:text="First Hour:"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_border"
-                android:gravity="end"
-                android:padding="8dp"
-                android:text="5$"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-        </TableRow>
-
-        <!-- 2-5 Hours -->
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_border"
-                android:padding="8dp"
-                android:text="2-5 Hours:"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_border"
-                android:gravity="end"
-                android:padding="8dp"
-                android:text="10$"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-        </TableRow>
-
-        <!-- 5+ Hours -->
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_border"
-                android:padding="8dp"
-                android:text="For Every Extra Hour:"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_border"
-                android:gravity="end"
-                android:padding="8dp"
-                android:text="+2$"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-        </TableRow>
-
-    </TableLayout>
+    <ImageView
+        android:id="@+id/gascost"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:contentDescription="Gas cost chart"
+        android:src="@drawable/gascost"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/securityDepositNotice" />
 
     <Button
         android:id="@+id/park"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="162dp"
+        android:layout_height="46dp"
+        android:backgroundTint="#9F233C78"
         android:text="PARK"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/priceTable" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.786" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,8 @@ public class LoginManagerActivity extends AppCompatActivity {
     private EditText EmailEditText;
     private EditText passwordEditText;
     private Button loginButton;
+
+    private Button ForgotButton;
     private ProgressBar loadingProgressBar;
 
     @Override
@@ -33,6 +35,7 @@ public class LoginManagerActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
         loadingProgressBar = findViewById(R.id.loading);
+        ForgotButton = findViewById(R.id.forgot);
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -55,6 +58,15 @@ public class LoginManagerActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> attemptLogin());
+
+        ForgotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginManagerActivity.this, GetEmailActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void validateLoginForm() {

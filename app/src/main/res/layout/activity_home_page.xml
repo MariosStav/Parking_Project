@@ -2,10 +2,29 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Unpark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
-    tools:context=".HomePage">
+    tools:context=".HomeDrawerActivity">
+
+    <Button
+        android:id="@+id/profile2"
+        android:layout_width="350dp"
+        android:layout_height="53dp"
+        android:layout_gravity="start"
+        android:backgroundTint="#66233C78"
+        android:enabled="true"
+        android:text="Edit profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
+        app:iconTint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.115" />
 
     <TextView
         android:id="@+id/welcomeText"
@@ -28,7 +47,7 @@
         android:layout_gravity="start"
         android:backgroundTint="#66233C78"
         android:enabled="true"
-        android:text="Αναζήτηση Στάθμευσης"
+        android:text="Search Parklocation"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
         app:iconTint="#000000"
@@ -37,27 +56,24 @@
         app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.134" />
+        app:layout_constraintVertical_bias="0.269" />
 
     <Button
         android:id="@+id/completepark"
         android:layout_width="350dp"
-        android:layout_height="70dp"
+        android:layout_height="53dp"
         android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="52dp"
         android:backgroundTint="#66233C78"
         android:enabled="true"
-        android:text="Ολοκλήρωση Στάθμευσης και Πληρωμή"
+        android:text="Unpark and Pay"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
         app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/wallet"
@@ -68,7 +84,7 @@
         android:layout_marginBottom="256dp"
         android:backgroundTint="#66233C78"
         android:enabled="true"
-        android:text="Διαχείρηση Πορτοφολιού"
+        android:text="Wallet"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
         app:iconTint="#000000"
@@ -76,7 +92,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
@@ -88,7 +103,7 @@
         android:layout_marginBottom="160dp"
         android:backgroundTint="#66233C78"
         android:enabled="true"
-        android:text="Προβολή Στατιστικών"
+        android:text="Statistcs"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
         app:iconTint="#000000"
@@ -96,7 +111,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/activepark"
+        android:layout_width="350dp"
+        android:layout_height="53dp"
+        android:backgroundTint="#66233C78"
+        android:text="My Parking Location"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
+        app:iconTint="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/wallet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/anazitisi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

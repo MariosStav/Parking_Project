@@ -1,186 +1,77 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/unpark1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:angle="45"
-    android:background="@drawable/background_orange"
-    android:endColor="#FF7043"
-    android:startColor="#FFD54F">
+    android:background="@drawable/background_orange">
 
-    <!-- Frame Container -->
+    <!-- TextView at the top -->
 
-    <!--Unpark Button -->
-    <LinearLayout
-        android:id="@+id/frame_container"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="126dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="184dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="24dp">
+    <!-- Electric cost image centered -->
 
-        <!-- Cost Explanation Text-->
-        <TextView
-            android:id="@+id/costs_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:background="@drawable/button_border"
-            android:drawableEnd="@drawable/baseline_directions_car_24"
-            android:drawablePadding="8dp"
-            android:padding="16dp"
-            android:text="Parking Cost Per Hour: "
-            android:textColor="@color/navy"
-            android:textSize="22sp"
-            android:textStyle="italic" />
+    <!-- Gas cost image exactly overlapping electriccost -->
 
-        <!-- Parking Cost Table -->
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/roundstyle"
-            android:stretchColumns="1" />
+    <!-- Buttons side by side below images -->
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/roundstyle"
-            android:backgroundTint="#E3F2FD"
-            android:padding="8dp"
-            android:stretchColumns="1">
-
-            <!-- Header Row -->
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/table_border"
-                    android:padding="8dp"
-                    android:text="Hours"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/table_border"
-                    android:gravity="end"
-                    android:padding="8dp"
-                    android:text="Cost"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
-            </TableRow>
-
-            <!-- First Hour -->
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/table_border"
-                    android:padding="8dp"
-                    android:text="First Hour:"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/table_border"
-                    android:gravity="end"
-                    android:padding="8dp"
-                    android:text="5$"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-            </TableRow>
-
-            <!-- 2-5 Hours -->
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/table_border"
-                    android:padding="8dp"
-                    android:text="2-5 Hours:"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/table_border"
-                    android:gravity="end"
-                    android:padding="8dp"
-                    android:text="10$"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-            </TableRow>
-
-            <!-- 5+ Hours -->
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/table_border"
-                    android:padding="8dp"
-                    android:text="For Every Extra Hour:"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/table_border"
-                    android:gravity="end"
-                    android:padding="8dp"
-                    android:text="+2$"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-            </TableRow>
-        </TableLayout>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/unpark_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="130dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="542dp"
-        android:layout_marginEnd="117dp"
-        android:layout_marginRight="130dp"
-        android:layout_marginBottom="134dp"
-        android:background="@drawable/button_border"
-        android:backgroundTint="@color/dark_blue"
-        android:text="Unpark"
-        android:textColor="@color/white"
-        android:textSize="25dp"
+    <TextView
+        android:id="@+id/costs_text"
+        android:layout_width="281dp"
+        android:layout_height="65dp"
+        android:background="#BF233C78"
+        android:drawablePadding="0dp"
+        android:padding="16dp"
+        android:text="Parking Cost Per Hour:"
+        android:textColor="@color/holo_orange_light"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.74" />
+        app:layout_constraintVertical_bias="0.187" />
 
+    <ImageView
+        android:id="@+id/electriccost"
+        android:layout_width="340dp"
+        android:layout_height="276dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="Electric cost image"
+        android:src="@drawable/electriccost"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/costs_text"
+        app:layout_constraintVertical_bias="0.112" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/gascost"
+        android:layout_width="341dp"
+        android:layout_height="329dp"
+        android:contentDescription="Gas cost image"
+        android:src="@drawable/gascost"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/costs_text"
+        app:layout_constraintVertical_bias="0.103" />
+
+    <Button
+        android:id="@+id/unpark_btn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#88233C78"
+        android:text="Unpark"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.862"
+        app:layout_constraintWidth_percent="0.48" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

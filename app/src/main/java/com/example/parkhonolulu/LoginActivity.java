@@ -15,6 +15,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private ProgressBar loadingProgressBar;
+    private Button forgotpasswordButton;
     private Button loginButton;
     private Button loginManagerButton;
     private Button signUpButton;
@@ -28,8 +29,17 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
         signUpButton = findViewById(R.id.signup);
+        forgotpasswordButton = findViewById(R.id.forgotpassword);
         loginManagerButton = findViewById(R.id.login2);
         loadingProgressBar = findViewById(R.id.loading);
+
+        forgotpasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, GetEmailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         signUpButton.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
@@ -61,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                         loadingProgressBar.setVisibility(View.GONE);
                         Toast.makeText(LoginActivity.this, "Welcome, " + username, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, HomeDrawerActivity.class));
-                        finish();
                     },
                     e -> {
                         loadingProgressBar.setVisibility(View.GONE);

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/selectedSpotInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selected location: lat, lng"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/lag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Latitude"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/lgn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Longitude"
+        android:enabled="false" />
+
+    <TextView
+        android:id="@+id/confirmationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Are you sure you want to delete this parking location?"
+        android:textColor="#B00020"
+        android:paddingTop="16dp"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/confirmDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DELETE"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#B00020"
+        android:layout_marginTop="8dp" />
+</LinearLayout>

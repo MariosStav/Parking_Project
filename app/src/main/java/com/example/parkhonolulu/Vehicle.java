@@ -12,6 +12,7 @@ public class Vehicle {
 
     private String vehicleNum;
     private String carType;
+    private String id;  // Firestore document ID
 
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String COLLECTION_NAME = "vehicles";
@@ -25,7 +26,21 @@ public class Vehicle {
         this.carType = carType;
     }
 
-    // Getters and Setters
+    public Vehicle(String id, String vehicleNum, String carType) {
+        this.id = id;
+        this.vehicleNum = vehicleNum;
+        this.carType = carType;
+    }
+
+    // Add getter and setter for 'id'
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getVehicleNum() {
         return vehicleNum;
     }
@@ -42,80 +57,91 @@ public class Vehicle {
         this.carType = carType;
     }
 
-    // Save vehicle to Firestore
-    public void saveToDatabase() {
+    // Save vehicle to Firestore with custom ID (if id is set)
+    public void saveToDatabase(OnSuccessListener<Void> onSuccess, OnFailureListener onFailure) {
         Map<String, Object> vehicleData = new HashMap<>();
         vehicleData.put("vehicleNum", vehicleNum);
         vehicleData.put("carType", carType);
 
-        db.collection(COLLECTION_NAME).document(vehicleNum)
-                .set(vehicleData)
-                .addOnSuccessListener(aVoid -> {
-                    System.out.println("Vehicle saved successfully.");
-                })
-                .addOnFailureListener(e -> {
-                    System.err.println("Error saving vehicle: " + e.getMessage());
-                });
+        if (id != null && !id.isEmpty()) {
+            // Save using existing document ID
+            db.collection(COLLECTION_NAME).document(id)
+                    .set(vehicleData)
+                    .addOnSuccessListener(onSuccess)
+                    .addOnFailureListener(onFailure);
+        } else {
+            // No id, generate a new document with auto ID
+            db.collection(COLLECTION_NAME).add(vehicleData)
+                    .addOnSuccessListener(documentReference -> {
+                        this.id = documentReference.getId();
+                        // Optionally update the vehicleNum inside the document if needed
+                        documentReference.update("vehicleNum", vehicleNum)
+                                .addOnSuccessListener(aVoid -> onSuccess.onSuccess(aVoid))
+                                .addOnFailureListener(onFailure);
+                    })
+                    .addOnFailureListener(onFailure);
+        }
     }
 
-    // Update existing vehicle in Firestore
-    public void updateCarType(String newCarType) {
-        db.collection(COLLECTION_NAME).document(vehicleNum)
-                .update("carType", newCarType)
-                .addOnSuccessListener(aVoid -> {
-                    System.out.println("Vehicle updated successfully.");
-                })
-                .addOnFailureListener(e -> {
-                    System.err.println("Error updating vehicle: " + e.getMessage());
-                });
-    }
-
-    // Delete vehicle from Firestore
-    public void deleteFromDatabase() {
-        db.collection(COLLECTION_NAME).document(vehicleNum)
-                .delete()
-                .addOnSuccessListener(aVoid -> {
-                    System.out.println("Vehicle deleted successfully.");
-                })
-                .addOnFailureListener(e -> {
-                    System.err.println("Error deleting vehicle: " + e.getMessage());
-                });
-    }
-
-    // Static method to fetch vehicle by vehicle number
-    public static void getVehicleByNumber(String vehicleNum, OnSuccessListener<DocumentSnapshot> successListener, OnFailureListener failureListener) {
-        db.collection(COLLECTION_NAME).document(vehicleNum)
-                .get()
-                .addOnSuccessListener(successListener)
-                .addOnFailureListener(failureListener);
-    }
-
-    public void saveToDatabaseWithAutoId(OnSuccessListener<String> onSuccess, OnFailureListener onFailure) {
-        Map<String, Object> vehicleData = new HashMap<>();
-        vehicleData.put("vehicleNum", ""); // Initially blank, to be updated
-        vehicleData.put("carType", carType);
-
-        db.collection(COLLECTION_NAME).add(vehicleData)
-                .addOnSuccessListener(documentReference -> {
-                    String id = documentReference.getId();
-
-                    // Update vehicleNum to match document ID
-                    documentReference.update("vehicleNum", id)
-                            .addOnSuccessListener(unused -> onSuccess.onSuccess(id))
-                            .addOnFailureListener(onFailure);
-                })
+    // Update vehicleNum field by document id
+    public void updateVehicleNum(String newVehicleNum, OnSuccessListener<Void> onSuccess, OnFailureListener onFailure) {
+        if (id == null || id.isEmpty()) {
+            if (onFailure != null) {
+                onFailure.onFailure(new Exception("Vehicle ID is null or empty"));
+            }
+            return;
+        }
+        db.collection(COLLECTION_NAME)
+                .document(id)
+                .update("vehicleNum", newVehicleNum)
+                .addOnSuccessListener(onSuccess)
                 .addOnFailureListener(onFailure);
     }
 
-    // --- Async fetchers for individual fields by vehicleNum ---
+    // Update carType field by document id
+    public void updateCarType(String newCarType, OnSuccessListener<Void> onSuccess, OnFailureListener onFailure) {
+        if (id == null || id.isEmpty()) {
+            if (onFailure != null) {
+                onFailure.onFailure(new Exception("Vehicle ID is null or empty"));
+            }
+            return;
+        }
+        db.collection(COLLECTION_NAME)
+                .document(id)
+                .update("carType", newCarType)
+                .addOnSuccessListener(onSuccess)
+                .addOnFailureListener(onFailure);
+    }
 
-    private static void fetchField(String vehicleNum, String fieldName, OnSuccessListener<Object> onSuccess, OnFailureListener onFailure) {
-        db.collection(COLLECTION_NAME).document(vehicleNum)
+    // Delete vehicle from Firestore by document id
+    public void deleteFromDatabase(OnSuccessListener<Void> onSuccess, OnFailureListener onFailure) {
+        if (id == null || id.isEmpty()) {
+            if (onFailure != null) {
+                onFailure.onFailure(new Exception("Vehicle ID is null or empty"));
+            }
+            return;
+        }
+        db.collection(COLLECTION_NAME)
+                .document(id)
+                .delete()
+                .addOnSuccessListener(onSuccess)
+                .addOnFailureListener(onFailure);
+    }
+
+    // Fetch vehicle by document id (id)
+    public static void fetchVehicle(String id, OnSuccessListener<Vehicle> onSuccess, OnFailureListener onFailure) {
+        db.collection(COLLECTION_NAME)
+                .document(id)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        Object value = documentSnapshot.get(fieldName);
-                        onSuccess.onSuccess(value);
+                        Vehicle vehicle = documentSnapshot.toObject(Vehicle.class);
+                        if (vehicle != null) {
+                            vehicle.setId(documentSnapshot.getId()); // make sure id is set
+                            onSuccess.onSuccess(vehicle);
+                        } else {
+                            onFailure.onFailure(new Exception("Vehicle data invalid"));
+                        }
                     } else {
                         onFailure.onFailure(new Exception("Vehicle not found"));
                     }
@@ -123,15 +149,18 @@ public class Vehicle {
                 .addOnFailureListener(onFailure);
     }
 
-    public static void fetchVehicleNum(String vehicleNum, OnSuccessListener<String> onSuccess, OnFailureListener onFailure) {
-        fetchField(vehicleNum, "vehicleNum",
-                value -> onSuccess.onSuccess(value != null ? (String) value : null),
-                onFailure);
+    public void saveToDatabaseWithAutoId(OnSuccessListener<String> onSuccess, OnFailureListener onFailure) {
+        Map<String, Object> vehicleData = new HashMap<>();
+        vehicleData.put("vehicleNum", vehicleNum);  // user input license plate
+        vehicleData.put("carType", carType);
+
+        db.collection(COLLECTION_NAME).add(vehicleData)
+                .addOnSuccessListener(documentReference -> {
+                    String id = documentReference.getId();  // Firestore generated doc ID
+                    this.id = id; // optional: keep track of this ID in your instance
+                    onSuccess.onSuccess(id);
+                })
+                .addOnFailureListener(onFailure);
     }
 
-    public static void fetchCarType(String vehicleNum, OnSuccessListener<String> onSuccess, OnFailureListener onFailure) {
-        fetchField(vehicleNum, "carType",
-                value -> onSuccess.onSuccess(value != null ? (String) value : null),
-                onFailure);
-    }
 }

@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_white"
@@ -12,7 +13,6 @@
         android:layout_height="480dp"
         android:layout_marginTop="100dp"
         android:layout_marginBottom="90dp"
-        android:background="@drawable/table_border"
         android:backgroundTint="#00D5ACAC"
         android:gravity="center"
         android:orientation="vertical"
@@ -22,17 +22,30 @@
 
         <!-- Amount -->
         <TextView
-            android:id="@+id/balanceTextView"
+            android:id="@+id/TextBalance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:text="Balance:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#233C78"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/balanceEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/borders"
-            android:gravity="center_horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="Balance: €0.00"
+            android:enabled="false"
+            android:gravity="center"
+            android:hint=" "
+            android:minHeight="48dp"
+            android:padding="10dp"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
+
 
         <EditText
             android:id="@+id/amountEditText"
@@ -41,7 +54,7 @@
             android:layout_marginTop="60dp"
             android:background="@drawable/borders"
             android:gravity="center"
-            android:hint="Amount: (€)"
+            android:hint="Amount: ($)"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
             android:padding="10dp"
@@ -66,25 +79,22 @@
                 android:id="@+id/payParkingButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="start"
                 android:layout_marginStart="5dp"
-                android:background="@drawable/button_border"
-                android:backgroundTint="@color/blue"
+                android:alpha="0.5"
+                android:backgroundTint="#99233C78"
+                android:enabled="false"
                 android:fontFamily="sans-serif-medium"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="Payment"
-                android:textColor="@color/white"
+                android:textColor="#FFFFFF"
                 android:textSize="24sp"
-                android:textStyle="normal|bold" />
+                android:textStyle="normal|bold"
+                app:iconTint="#000000" />
         </LinearLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/transactionsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:importantForAccessibility="no" />
     </LinearLayout>
 
 </LinearLayout>

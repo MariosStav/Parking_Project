@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.PropertyName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,22 +45,34 @@ public class Manager {
     }
 
     // Getters and setters
+    @PropertyName("Name")
     public String getName() { return name; }
+    @PropertyName("Name")
     public void setName(String name) { this.name = name; }
 
+    @PropertyName("Surname")
     public String getSurname() { return surname; }
+    @PropertyName("Surname")
     public void setSurname(String surname) { this.surname = surname; }
 
+    @PropertyName("Email")
     public String getEmail() { return email; }
+    @PropertyName("Email")
     public void setEmail(String email) { this.email = email; }
 
+    @PropertyName("Password")
     public String getPassword() { return password; }
+    @PropertyName("Password")
     public void setPassword(String password) { this.password = password; }
 
+    @PropertyName("Phone")
     public String getPhone() { return phone; }
+    @PropertyName("Phone")
     public void setPhone(String phone) { this.phone = phone; }
 
+    @PropertyName("Role")
     public String getRole() { return role; }
+    @PropertyName("Role")
     public void setRole(String role) { this.role = role; }
 
     public static void login(String email, String password,
@@ -127,22 +140,90 @@ public class Manager {
 
     // Save Manager to Firestore with email as document ID
     public void saveToDatabase(OnSuccessListener<Void> onSuccess, OnFailureListener onFailure) {
-        Map<String, Object> managerData = new HashMap<>();
-        managerData.put("Name", name);
-        managerData.put("Surname", surname);
-        managerData.put("Email", email);
-        managerData.put("Password", password);
-        managerData.put("Phone", phone);
-        managerData.put("role", role);
+        String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        String id = email.trim().toLowerCase();
-        db.collection(COLLECTION_NAME).document(id)
-                .set(managerData)
-                .addOnSuccessListener(onSuccess)
+        db.collection(COLLECTION_NAME)
+                .whereEqualTo("Email", currentEmail)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        String docId = querySnapshot.getDocuments().get(0).getId();
+
+                        Map<String, Object> managerData = new HashMap<>();
+                        managerData.put("Name", name);
+                        managerData.put("Surname", surname);
+                        managerData.put("Email", email);
+                        managerData.put("Password", password);
+                        managerData.put("Phone", phone);
+                        managerData.put("role", role);
+
+                        db.collection(COLLECTION_NAME).document(docId)
+                                .set(managerData)
+                                .addOnSuccessListener(onSuccess)
+                                .addOnFailureListener(onFailure);
+                    } else {
+                        onFailure.onFailure(new Exception("Manager document not found"));
+                    }
+                })
                 .addOnFailureListener(onFailure);
     }
 
+    public static void changePassword(String newPassword,
+                                      OnSuccessListener<Void> onSuccess,
+                                      OnFailureListener onFailure) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            auth.getCurrentUser().updatePassword(newPassword)
+                    .addOnSuccessListener(unused -> {
+                        // Also update in Firestore
+                        String email = auth.getCurrentUser().getEmail();
+                        db.collection(COLLECTION_NAME)
+                                .whereEqualTo("Email", email)
+                                .get()
+                                .addOnSuccessListener(querySnapshot -> {
+                                    if (!querySnapshot.isEmpty()) {
+                                        String docId = querySnapshot.getDocuments().get(0).getId();
+                                        db.collection(COLLECTION_NAME).document(docId)
+                                                .update("Password", newPassword)
+                                                .addOnSuccessListener(onSuccess)
+                                                .addOnFailureListener(onFailure);
+                                    } else {
+                                        onFailure.onFailure(new Exception("Manager document not found"));
+                                    }
+                                })
+                                .addOnFailureListener(onFailure);
+                    })
+                    .addOnFailureListener(onFailure);
+        } else {
+            onFailure.onFailure(new Exception("No authenticated user"));
+        }
+    }
+
+
     // Generic private fetch helper
+    public static void fetchCurrentManager(OnSuccessListener<Manager> onSuccess, OnFailureListener onFailure) {
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        if (email == null) {
+            onFailure.onFailure(new Exception("No authenticated user"));
+            return;
+        }
+
+        db.collection("Manager")
+                .whereEqualTo("Email", email)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                        Manager manager = document.toObject(Manager.class);
+                        onSuccess.onSuccess(manager);
+                    } else {
+                        onFailure.onFailure(new Exception("Manager not found"));
+                    }
+                })
+                .addOnFailureListener(onFailure);
+    }
+
+
     private static void fetchField(String email, String fieldName, OnSuccessListener<Object> onSuccess, OnFailureListener onFailure) {
         db.collection(COLLECTION_NAME)
                 .whereEqualTo("Email", email)

@@ -2,22 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:background="@drawable/background"
+    android:background="@drawable/logo_orthogonio"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:padding="16dp">
-
-    <!-- Shadow effect to make white text pop -->
-    <TextView
-        android:id="@+id/nav_header_title_manager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:shadowColor="#AA000000"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="4"
-        android:text="Honolulu Park - Manager"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#0097A7" />
-
-</LinearLayout>
+    android:padding="16dp"/>

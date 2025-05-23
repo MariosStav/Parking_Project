@@ -3,6 +3,7 @@ package com.example.parkhonolulu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -55,7 +56,7 @@ public class ManagerAuthActivity extends AppCompatActivity {
         executor.execute(() -> {
             otp = generateOtp(); // Δημιουργούμε το OTP
             EmailUtils.sendOtpEmail(email, otp); // Στέλνουμε το OTP μέσω email
-            Log.d("ManagerAuthActivity", "OTP sent to " + managerEmail);
+            Log.d("ManagerAuthActivity", "Code sent to " + managerEmail);
         });
         executor.shutdown();
     }
@@ -65,17 +66,17 @@ public class ManagerAuthActivity extends AppCompatActivity {
         String enteredOtp = otpEditText.getText().toString();
 
         if (enteredOtp.isEmpty()) {
-            Toast.makeText(this, "Please enter the OTP", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter the Code", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (enteredOtp.equals(otp)) {
-            Toast.makeText(this, "OTP verified successfully!", Toast.LENGTH_SHORT).show();
-            Log.d("ManagerAuthActivity", "OTP verification successful, starting ManagerHomeDrawerActivity."); // Changed Log
-            startActivity(new Intent(ManagerAuthActivity.this, ManagerHomeDrawerActivity.class)); // Changed to ManagerHomeDrawerActivity
+            Toast.makeText(this, "Code verified successfully!", Toast.LENGTH_SHORT).show();
+            Log.d("ManagerAuthActivity", "Code verification successful, starting ManagerHomePage.");
+            startActivity(new Intent(ManagerAuthActivity.this, ManagerHomeDrawerActivity.class));
             finish();
         } else {
-            Toast.makeText(this, "OTP verification failed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Code verification failed.", Toast.LENGTH_SHORT).show();
         }
     }
 }
