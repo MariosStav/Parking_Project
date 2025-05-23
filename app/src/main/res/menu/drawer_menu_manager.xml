@@ -1,9 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_manager_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+        <item
             android:id="@+id/nav_add_manager"
             android:icon="@drawable/ic_person_add"
             android:title="Add Manager" />
+        <item
+            android:id="@+id/nav_edit_manager_profile"
+            android:icon="@drawable/ic_edit"
+            android:title="Edit Profile" />
+        <item
+            android:id="@+id/nav_manager_statistics"
+            android:icon="@drawable/ic_assessment"
+            android:title="Statistics" />
+        <item
+            android:id="@+id/nav_add_park_location"
+            android:icon="@drawable/ic_parking"
+            android:title="Manage Park Locations" />
         <item
             android:id="@+id/nav_manager_logout"
             android:icon="@drawable/ic_logout"

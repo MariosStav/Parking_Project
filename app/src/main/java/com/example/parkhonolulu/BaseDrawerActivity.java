@@ -47,7 +47,11 @@ public abstract class BaseDrawerActivity extends AppCompatActivity implements Na
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_lookup) {
+        if (id == R.id.nav_home) {
+            Intent homeIntent = new Intent(this, HomeDrawerActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(homeIntent);
+        } else if (id == R.id.nav_lookup) {
             startActivity(new Intent(this, MapsActivity.class));
         } else if (id == R.id.nav_complete_park) {
             startActivity(new Intent(this, UnparkActvity.class));
@@ -60,9 +64,7 @@ public abstract class BaseDrawerActivity extends AppCompatActivity implements Na
             startActivity(intent);
             finishAffinity(); // Ensures all activities in the task are cleared
         }
-        if (drawerLayout != null) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 

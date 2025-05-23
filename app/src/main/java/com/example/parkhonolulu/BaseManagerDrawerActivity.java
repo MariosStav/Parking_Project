@@ -49,8 +49,18 @@ public abstract class BaseManagerDrawerActivity extends AppCompatActivity implem
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_add_manager) {
+        if (id == R.id.nav_manager_home) {
+            Intent intent = new Intent(this, ManagerHomeDrawerActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        } else if (id == R.id.nav_add_manager) {
             startActivity(new Intent(this, AddManagerActivity.class));
+        } else if (id == R.id.nav_edit_manager_profile) {
+            startActivity(new Intent(this, EditManagerActivity.class));
+        } else if (id == R.id.nav_manager_statistics) {
+            startActivity(new Intent(this, ManagerStatisticsActivity.class));
+        } else if (id == R.id.nav_add_park_location) {
+            startActivity(new Intent(this, HandlungParklocationActivity.class));
         } else if (id == R.id.nav_manager_logout) {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, LoginActivity.class); // Assuming LoginActivity is the main login

@@ -84,18 +84,28 @@ public class HomeDrawerActivity extends BaseDrawerActivity implements Navigation
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_lookup) {
+        if (id == R.id.nav_home) { 
+            Intent intent = new Intent(this, HomeDrawerActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        } else if (id == R.id.nav_lookup) {
             startActivity(new Intent(this, MapsActivity.class));
         } else if (id == R.id.nav_complete_park) {
             startActivity(new Intent(this, UnparkActvity.class));
         } else if (id == R.id.nav_wallet) {
             startActivity(new Intent(this, WalletActivity.class));
+        } else if (id == R.id.nav_my_park) {
+            startActivity(new Intent(this, MyparklocationActivity.class));
+        } else if (id == R.id.nav_edit_profile) {
+            startActivity(new Intent(this, EditUserActivity.class));
+        } else if (id == R.id.nav_statistics) {
+            startActivity(new Intent(this, UserStatisticsActivity.class));
         } else if (id == R.id.nav_logout) {
             com.google.firebase.auth.FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finishAffinity(); // Changed from finish() to ensure all activities in the task are cleared
+            Intent logoutIntent = new Intent(this, LoginActivity.class);
+            logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(logoutIntent);
+            finishAffinity(); 
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

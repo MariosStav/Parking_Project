@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+    <item
         android:id="@+id/nav_lookup"
-        android:title="Αναζήτηση Στάθμευσης"
-        android:icon="@drawable/ic_search" />
+        android:icon="@drawable/ic_search"
+        android:title="Parking Search" />
+    <item
+        android:id="@+id/nav_my_park"
+        android:icon="@drawable/ic_directions_car"
+        android:title="My Park" />
     <item
         android:id="@+id/nav_complete_park"
-        android:title="Ολοκλήρωση Στάθμευσης"
-        android:icon="@drawable/ic_parking" />
+        android:icon="@drawable/ic_parking"
+        android:title="Complete Parking" />
     <item
         android:id="@+id/nav_wallet"
-        android:title="Πορτοφόλι"
-        android:icon="@drawable/ic_wallet" />
+        android:icon="@drawable/ic_wallet"
+        android:title="Wallet" />
+    <item
+        android:id="@+id/nav_statistics"
+        android:icon="@drawable/ic_assessment"
+        android:title="Statistics" />
+    <item
+        android:id="@+id/nav_edit_profile"
+        android:icon="@drawable/ic_edit"
+        android:title="Edit Profile" />
     <item
         android:id="@+id/nav_logout"
-        android:title="Αποσύνδεση"
-        android:icon="@drawable/ic_logout" />
+        android:icon="@drawable/ic_logout"
+        android:title="Logout" />
 </menu>
