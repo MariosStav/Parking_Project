@@ -48,8 +48,8 @@
 
     <ImageView
         android:id="@+id/electriccost"
-        android:layout_width="290dp"
-        android:layout_height="288dp"
+        android:layout_width="380dp"
+        android:layout_height="282dp"
         android:contentDescription="Electric cost chart"
         android:src="@drawable/electriccost"
         android:visibility="visible"
@@ -58,18 +58,22 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/securityDepositNotice"
-        app:layout_constraintVertical_bias="0.159" />
+        app:layout_constraintVertical_bias="0.191" />
 
     <ImageView
         android:id="@+id/gascost"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="380dp"
+        android:layout_height="282dp"
+        android:layout_marginTop="168dp"
         android:contentDescription="Gas cost chart"
         android:src="@drawable/gascost"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/securityDepositNotice" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.04" />
 
     <Button
         android:id="@+id/park"
@@ -81,9 +85,9 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.786" />
+        app:layout_constraintVertical_bias="0.874" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

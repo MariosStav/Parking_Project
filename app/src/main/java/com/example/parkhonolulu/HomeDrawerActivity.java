@@ -84,7 +84,7 @@ public class HomeDrawerActivity extends BaseDrawerActivity implements Navigation
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_home) { 
+        if (id == R.id.nav_home) {
             Intent intent = new Intent(this, HomeDrawerActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
@@ -105,7 +105,7 @@ public class HomeDrawerActivity extends BaseDrawerActivity implements Navigation
             Intent logoutIntent = new Intent(this, LoginActivity.class);
             logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(logoutIntent);
-            finishAffinity(); 
+            finishAffinity();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

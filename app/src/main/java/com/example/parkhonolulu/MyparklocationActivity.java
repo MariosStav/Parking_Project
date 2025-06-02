@@ -1,7 +1,10 @@
 package com.example.parkhonolulu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +21,7 @@ public class MyparklocationActivity extends BaseDrawerActivity implements OnMapR
     private static final float DEFAULT_ZOOM = 14.0f;
     private GoogleMap mMap;
     private TextView currentFeeText;
+    private Button unpark;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -26,12 +30,21 @@ public class MyparklocationActivity extends BaseDrawerActivity implements OnMapR
         getLayoutInflater().inflate(R.layout.activity_myparklocation, findViewById(R.id.content_frame), true);
 
         currentFeeText = findViewById(R.id.currentFeeText);
+        unpark = findViewById(R.id.unpark_btn);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+
+        unpark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyparklocationActivity.this, UnparkActvity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

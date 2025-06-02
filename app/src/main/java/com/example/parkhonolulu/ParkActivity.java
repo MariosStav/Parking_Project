@@ -3,6 +3,7 @@
 
     import android.content.Intent;
     import android.os.Bundle;
+    import android.util.Log;
     import android.view.View;
     import android.widget.Button;
     import android.widget.ImageView;
@@ -16,6 +17,7 @@
 
     public class ParkActivity extends BaseDrawerActivity {
         private Button Park;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
 
@@ -69,12 +71,14 @@
                                 session.saveSession(new parking_session.OnSessionSavedListener() {
                                     @Override
                                     public void onSuccess() {
+                                        Toast.makeText(ParkActivity.this,
+                                                "Parking successful!\n$20 security deposit has been reserved on your account.",
+                                                Toast.LENGTH_LONG).show();
                                         startActivity(new Intent(ParkActivity.this, HomeDrawerActivity.class));
                                     }
 
                                     @Override
                                     public void onFailure(Exception e) {
-                                        Toast.makeText(ParkActivity.this, "Parking failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                         e.printStackTrace();
                                     }
                                 });
@@ -82,8 +86,18 @@
                             }, e -> Toast.makeText(ParkActivity.this, "Failed to fetch vehicle info: " + e.getMessage(), Toast.LENGTH_LONG).show());
 
                         },
-                        e -> Toast.makeText(ParkActivity.this, "Error checking balance: " + e.getMessage(), Toast.LENGTH_LONG).show(),
-                        () -> Toast.makeText(ParkActivity.this, "Not enough money in balance. Please add funds.", Toast.LENGTH_LONG).show()
+                        e -> {
+                            Log.d("BalanceDebug", "FAILURE: some error: " + e.getMessage());
+                            Toast.makeText(ParkActivity.this, "Error checking balance: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        },
+                        () -> {
+                            Log.d("BalanceDebug", "INSUFFICIENT FUNDS");
+                            new androidx.appcompat.app.AlertDialog.Builder(ParkActivity.this)
+                                    .setTitle("Insufficient Funds")
+                                    .setMessage("Not enough money in balance. Please add funds.")
+                                    .setPositiveButton("OK", null)
+                                    .show();
+                        }
                 );
             });
         }

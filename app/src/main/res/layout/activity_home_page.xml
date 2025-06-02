@@ -21,10 +21,46 @@
         app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.115" />
+        app:layout_constraintVertical_bias="0.081" />
+
+    <Button
+        android:id="@+id/wallet"
+        android:layout_width="350dp"
+        android:layout_height="53dp"
+        android:layout_gravity="start"
+        android:backgroundTint="#66233C78"
+        android:enabled="true"
+        android:text="Wallet"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
+        app:iconTint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statistika"
+        app:layout_constraintVertical_bias="0.027" />
+
+    <Button
+        android:id="@+id/statistika"
+        android:layout_width="350dp"
+        android:layout_height="53dp"
+        android:layout_gravity="start"
+        android:backgroundTint="#66233C78"
+        android:enabled="true"
+        android:text="Statistcs"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
+        app:iconTint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile2"
+        app:layout_constraintVertical_bias="0.021" />
 
     <TextView
         android:id="@+id/welcomeText"
@@ -47,23 +83,23 @@
         android:layout_gravity="start"
         android:backgroundTint="#66233C78"
         android:enabled="true"
-        android:text="Search Parklocation"
+        android:text="Search Park Location"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
         app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.269" />
+        app:layout_constraintVertical_bias="0.634" />
 
     <Button
         android:id="@+id/completepark"
         android:layout_width="350dp"
         android:layout_height="53dp"
         android:layout_gravity="start"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="56dp"
         android:backgroundTint="#66233C78"
         android:enabled="true"
         android:text="Unpark and Pay"
@@ -72,59 +108,24 @@
         app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/wallet"
-        android:layout_width="350dp"
-        android:layout_height="53dp"
-        android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="256dp"
-        android:backgroundTint="#66233C78"
-        android:enabled="true"
-        android:text="Wallet"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#FFFFFF"
-        app:iconTint="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/statistika"
-        android:layout_width="350dp"
-        android:layout_height="53dp"
-        android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="160dp"
-        android:backgroundTint="#66233C78"
-        android:enabled="true"
-        android:text="Statistcs"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#FFFFFF"
-        app:iconTint="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/activepark"
         android:layout_width="350dp"
         android:layout_height="53dp"
+        android:layout_marginBottom="44dp"
         android:backgroundTint="#66233C78"
         android:text="My Parking Location"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
         app:iconTint="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/wallet"
+        app:layout_constraintBottom_toTopOf="@+id/completepark"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/anazitisi" />
+        app:layout_constraintTop_toBottomOf="@+id/anazitisi"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,7 +75,7 @@ public class FinancialStatsManagerActivity extends BaseManagerDrawerActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Setup date range
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Athens"));
         Date endDate = calendar.getTime();
 
         switch (dateRange) {
@@ -133,21 +133,15 @@ public class FinancialStatsManagerActivity extends BaseManagerDrawerActivity {
                             if (revenue == null || locRef == null || startDateVal == null) continue;
 
                             String locId = locRef.getId();
-                            if (revenuePerSpot.containsKey(locId)) {
-                                revenuePerSpot.put(locId, revenuePerSpot.get(locId) + revenue);
-                            } else {
-                                revenuePerSpot.put(locId, revenue);
-                            }
+                            double currentSpotRevenue = revenuePerSpot.containsKey(locId) ? revenuePerSpot.get(locId) : 0.0;
+                            revenuePerSpot.put(locId, currentSpotRevenue + revenue);
 
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                             sdf.setTimeZone(TimeZone.getTimeZone("Europe/Athens"));
                             String day = sdf.format(startDateVal);
 
-                            if (revenuePerDay.containsKey(day)) {
-                                revenuePerDay.put(day, revenuePerDay.get(day) + revenue);
-                            } else {
-                                revenuePerDay.put(day, revenue);
-                            }
+                            double currentDayRevenue = revenuePerDay.containsKey(day) ? revenuePerDay.get(day) : 0.0;
+                            revenuePerDay.put(day, currentDayRevenue + revenue);
 
                             totalRevenue[0] += revenue;
                             sessionCount[0]++;
@@ -182,18 +176,12 @@ public class FinancialStatsManagerActivity extends BaseManagerDrawerActivity {
 
                                     if (!vehicleType.toLowerCase(Locale.ROOT).equals(locType)) continue;
 
-                                    if (revenuePerSpot.containsKey(locId)) {
-                                        revenuePerSpot.put(locId, revenuePerSpot.get(locId) + revenue);
-                                    } else {
-                                        revenuePerSpot.put(locId, revenue);
-                                    }
+                                    double currentSpotRevenue = revenuePerSpot.containsKey(locId) ? revenuePerSpot.get(locId) : 0.0;
+                                    revenuePerSpot.put(locId, currentSpotRevenue + revenue);
 
                                     String day = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(startDateVal);
-                                    if (revenuePerDay.containsKey(day)) {
-                                        revenuePerDay.put(day, revenuePerDay.get(day) + revenue);
-                                    } else {
-                                        revenuePerDay.put(day, revenue);
-                                    }
+                                    double currentDayRevenue = revenuePerDay.containsKey(day) ? revenuePerDay.get(day) : 0.0;
+                                    revenuePerDay.put(day, currentDayRevenue + revenue);
 
                                     totalRevenue[0] += revenue;
                                     sessionCount[0]++;
@@ -261,20 +249,6 @@ public class FinancialStatsManagerActivity extends BaseManagerDrawerActivity {
                         spotNames.put(spotDoc.getId(), spotDoc.getString("name"));
                     }
 
-                    List<PieEntry> pieEntries = new ArrayList<>();
-                    for (String spotId : revenuePerSpot.keySet()) {
-                        String name = spotNames.containsKey(spotId) ? spotNames.get(spotId) : "Spot " + spotId;
-                        pieEntries.add(new PieEntry(revenuePerSpot.get(spotId).floatValue(), name));
-                    }
-
-                    PieDataSet pieDataSet = new PieDataSet(pieEntries, "Fee charged by Spot");
-                    pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                    pieDataSet.setValueTextColor(Color.BLACK);
-                    pieDataSet.setValueTextSize(12f);
-                    pieChart.setData(new PieData(pieDataSet));
-                    pieChart.getDescription().setEnabled(false);
-                    pieChart.invalidate();
-
                     List<String> sortedDays = new ArrayList<>(allDates);
 
                     List<Entry> lineEntries = new ArrayList<>();
@@ -307,6 +281,61 @@ public class FinancialStatsManagerActivity extends BaseManagerDrawerActivity {
                     lineChart.getDescription().setEnabled(false);
                     lineChart.invalidate();
 
+                    List<PieEntry> pieEntries = new ArrayList<>();
+                    float totalRevenueFloat = 0f;
+
+// Sum total revenue
+                    for (Double val : revenuePerSpot.values()) {
+                        totalRevenueFloat += val.floatValue();
+                    }
+
+// Guard against division by zero
+                    if (totalRevenueFloat == 0f) {
+                        pieChart.clear();
+                        pieChart.setNoDataText("No revenue data to display");
+                        pieChart.invalidate();
+                        return;
+                    }
+
+                    float thresholdPercent = 5f; // Any slice below 5% goes into "Other"
+                    float otherSum = 0f;
+
+                    for (String spotId : revenuePerSpot.keySet()) {
+                        float val = revenuePerSpot.get(spotId).floatValue();
+                        float percent = (val / totalRevenueFloat) * 100f;
+
+                        if (percent < thresholdPercent) {
+                            otherSum += val;
+                        } else {
+                            String name = spotNames.containsKey(spotId) ? spotNames.get(spotId) : "Spot " + spotId;
+                            pieEntries.add(new PieEntry(val, name));
+                        }
+                    }
+
+// Add "Other" slice if needed
+                    if (otherSum > 0f) {
+                        pieEntries.add(new PieEntry(otherSum, "Other"));
+                    }
+
+// Create and configure PieDataSet
+                    PieDataSet pieDataSet = new PieDataSet(pieEntries, "Fee charged by Spot");
+                    pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                    pieDataSet.setValueTextColor(Color.BLACK);
+                    pieDataSet.setValueTextSize(12f);
+
+// Label settings
+                    pieDataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+                    pieDataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+                    pieDataSet.setValueLinePart1Length(0.3f);
+                    pieDataSet.setValueLinePart2Length(0.4f);
+                    pieDataSet.setValueLineColor(Color.DKGRAY);
+
+// Set data and refresh chart
+                    pieChart.setData(new PieData(pieDataSet));
+                    pieChart.getDescription().setEnabled(false);
+                    pieChart.setEntryLabelColor(Color.BLACK);
+                    pieChart.setUsePercentValues(false);
+                    pieChart.invalidate();
                 });
     }
 }

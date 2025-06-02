@@ -2,9 +2,11 @@ package com.example.parkhonolulu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class UnparkActvity extends BaseDrawerActivity {
 
     private Button Unpark;
+    private TextView currentFeeText;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -19,12 +22,26 @@ public class UnparkActvity extends BaseDrawerActivity {
         setupDrawer(R.layout.drawer_base);
         getLayoutInflater().inflate(R.layout.activity_unpark, findViewById(R.id.content_frame), true);
 
+        currentFeeText = findViewById(R.id.currentFeeText);
         ImageView electricCost = findViewById(R.id.electriccost);
         ImageView gasCost = findViewById(R.id.gascost);
 
         parking_session.fetchCurrentUserActiveSession(new parking_session.OnActiveSessionChecked() {
             @Override
             public void onActiveSessionFound(parking_session session) {
+
+                session.calculateCurrentFee(new parking_session.FeeCalculationCallback() {
+                    @Override
+                    public void onFeeCalculated(double fee, long hours) {
+                        currentFeeText.setText(String.format("Fee: $%.2f (%.0f hour%s)", fee, (double) hours, hours > 1 ? "s" : ""));
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        currentFeeText.setText("Failed to calculate fee");
+                        Log.e("ParkingSession", "Fee calculation error", e);
+                    }
+                });
 
                 String parkingLocationId = session.getParking_location_id().getId();
 
@@ -65,8 +82,14 @@ public class UnparkActvity extends BaseDrawerActivity {
                         @Override
                         public void onSuccess(double fee) {
                             runOnUiThread(() -> {
-                                Toast.makeText(UnparkActvity.this, "Unparked. Fee: $" + fee, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(UnparkActvity.this, HomeDrawerActivity.class));
+                                new androidx.appcompat.app.AlertDialog.Builder(UnparkActvity.this)
+                                        .setTitle("Unparked Successfully")
+                                        .setMessage("You have been unparked.\nFee charged: $" + fee)
+                                        .setPositiveButton("OK", (dialog, which) -> {
+                                            startActivity(new Intent(UnparkActvity.this, HomeDrawerActivity.class));
+                                            finish();
+                                        })
+                                        .show();
                             });
                         }
 

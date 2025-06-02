@@ -1,5 +1,8 @@
 package com.example.parkhonolulu;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -109,7 +112,9 @@ public class Balance {
 
         if (userId == null) {
             if (onFailure != null) {
-                onFailure.onFailure(new Exception("User not logged in"));
+                new android.os.Handler(android.os.Looper.getMainLooper()).post(() ->
+                        onFailure.onFailure(new Exception("User not logged in"))
+                );
             }
             return;
         }
@@ -137,16 +142,22 @@ public class Balance {
 
         }).addOnSuccessListener(aVoid -> {
             if (onSuccess != null) {
-                onSuccess.run();
+                new android.os.Handler(android.os.Looper.getMainLooper()).post(onSuccess);
             }
         }).addOnFailureListener(e -> {
-            if (e instanceof IllegalStateException && "Insufficient funds".equals(e.getMessage())) {
+            Log.e("Balance", "Transaction failed: " + e.getMessage(), e);
+
+            if (e instanceof IllegalStateException &&
+                    e.getMessage() != null &&
+                    e.getMessage().toLowerCase().contains("insufficient")) {
                 if (onInsufficientFunds != null) {
-                    onInsufficientFunds.run();
+                    new android.os.Handler(android.os.Looper.getMainLooper()).post(onInsufficientFunds);
                 }
             } else {
                 if (onFailure != null) {
-                    onFailure.onFailure(e);
+                    new android.os.Handler(android.os.Looper.getMainLooper()).post(() ->
+                            onFailure.onFailure(e)
+                    );
                 }
             }
         });
