@@ -26,6 +26,7 @@ public class MapsActivity extends BaseDrawerActivity implements OnMapReadyCallba
     private CheckBox checkboxShowUnavailable;
     private Button parkHereButton;
     private Marker selectedMarker;
+    private Marker highlightedMarker;
     private GoogleMap mMap;
     private parking_locations selectedSpot;
     private static final LatLng HONOLULU = new LatLng(21.3069, -157.8583);
@@ -100,12 +101,24 @@ public class MapsActivity extends BaseDrawerActivity implements OnMapReadyCallba
         loadParkingSpots();
 
         mMap.setOnMarkerClickListener(marker -> {
-            selectedMarker = marker;
+
             parkHereButton.setEnabled(false); // Disable immediately
 
             Object tag = marker.getTag();
             if (tag instanceof parking_locations) {
                 selectedSpot = (parking_locations) tag;
+
+                // Remove previously highlighted blue marker, if it exists
+                if (highlightedMarker != null) {
+                    highlightedMarker.remove();
+                }
+
+                // Add a new blue marker at selected spot
+                highlightedMarker = mMap.addMarker(new MarkerOptions()
+                        .position(marker.getPosition())
+                        .title(marker.getTitle())
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                );
 
                 DocumentReference userRef = User.getUserRef();
 
@@ -159,7 +172,14 @@ public class MapsActivity extends BaseDrawerActivity implements OnMapReadyCallba
             public void onSuccess(List<parking_locations> spots) {
                 runOnUiThread(() -> {
                     mMap.clear();
+                    highlightedMarker = null;
                     for (parking_locations spot : spots) {
+
+                        // Skip spots that are marked as deleted
+                        if (spot.isDeleted()) {
+                            continue;
+                        }
+
                         LatLng position = new LatLng(
                                 spot.getGeopoint().getLatitude(),
                                 spot.getGeopoint().getLongitude()

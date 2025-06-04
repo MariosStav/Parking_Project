@@ -23,9 +23,6 @@
             android:value="AIzaSyBC5Uapa-TbG_hJ4eXv1v0BPR9aeMUXPiE" />
 
         <activity
-            android:name=".AddManagerActivity"
-            android:exported="false" />
-        <activity
             android:name=".WalletActivity"
             android:exported="false" />
         <activity
@@ -41,25 +38,7 @@
             android:name=".FinancialStatsUserActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginManagerActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ManagerAuthActivity"
-            android:exported="false" />
-        <activity
-            android:name=".NewParkLocationActivity"
-            android:exported="false" />
-        <activity
             android:name=".MyparklocationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FinancialStatsManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ParkingStatusUsersManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UsageDurationManagerActivity"
             android:exported="false" />
         <activity
             android:name=".AddMoneyActivity"
@@ -68,22 +47,13 @@
             android:name=".GetEmailActivity"
             android:exported="false" />
         <activity
-            android:name=".AuthManagerPasswordActivity"
-            android:exported="false" />
-        <activity
             android:name=".EditManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ManagerStatisticsActivity"
             android:exported="false" />
         <activity
             android:name=".UserStatisticsActivity"
             android:exported="false" />
         <activity
             android:name=".EditUserActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HandlungParklocationActivity"
             android:exported="false" />
         <activity
             android:name=".MapsActivity"
@@ -103,8 +73,6 @@
         </activity>
         <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".HomeDrawerActivity"/>
-        <activity android:name=".ManagerHomeDrawerActivity"/>
-        <activity android:name=".BaseManagerDrawerActivity"/>
         <activity android:name="com.example.parkhonolulu.BaseDrawerActivity" />
     </application>
 

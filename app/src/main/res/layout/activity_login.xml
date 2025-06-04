@@ -14,42 +14,30 @@
     tools:context=".LoginActivity">
 
     <Button
-        android:id="@+id/signup"
-        android:layout_width="176dp"
-        android:layout_height="48dp"
-        android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
+        android:id="@+id/forgotpassword"
+        android:layout_width="185dp"
+        android:layout_height="57dp"
+        android:layout_marginEnd="8dp"
         android:backgroundTint="#807AB1AD"
-        android:enabled="true"
-        android:text="SIGN UP"
+        android:text="FORGOT PASSWORD"
         android:textColor="#000000"
-        app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/signup"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
     <Button
-        android:id="@+id/login2"
-        android:layout_width="195dp"
-        android:layout_height="48dp"
-        android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
+        android:id="@+id/signup"
+        android:layout_width="180dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="8dp"
         android:backgroundTint="#807AB1AD"
-        android:enabled="true"
-        android:text="LOG IN AS MANAGER"
+        android:text="SIGN UP"
         android:textColor="#000000"
-        app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toEndOf="@+id/forgotpassword"
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
     <Button
         android:id="@+id/login"
@@ -62,7 +50,8 @@
         android:enabled="true"
         android:text="LOG IN"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#82A09C"
+        android:textColor="#E46DD5CD"
+        android:textStyle="bold"
         app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -160,20 +149,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/logo_diafano" />
-
-    <Button
-        android:id="@+id/forgotpassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#5B000000"
-        android:text="FORGOT PASSWORD"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#82A09C"
-        app:iconTint="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login"
-        app:layout_constraintVertical_bias="0.133" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

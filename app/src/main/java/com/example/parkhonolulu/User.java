@@ -3,8 +3,10 @@ package com.example.parkhonolulu;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -113,10 +115,13 @@ public class User {
                 .whereEqualTo("username", username)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                    if (task.isSuccessful()) {
+                        if (!task.getResult().isEmpty()) {
+                            // Username found
+                            DocumentSnapshot document = task.getResult().getDocuments().get(0);
                             String email = document.getString("email");
 
+                            // Now try to sign in with email and password
                             auth.signInWithEmailAndPassword(email, password)
                                     .addOnSuccessListener(authResult -> {
                                         FirebaseUser user = authResult.getUser();
@@ -126,11 +131,16 @@ public class User {
                                             onFailure.onFailure(new Exception("Login failed"));
                                         }
                                     })
-                                    .addOnFailureListener(onFailure);
-                            break;
+                                    .addOnFailureListener(e -> {
+                                        // Password might be incorrect
+                                        onFailure.onFailure(new Exception("Incorrect password"));
+                                    });
+                        } else {
+                            // Username not found
+                            onFailure.onFailure(new Exception("Username not found"));
                         }
                     } else {
-                        onFailure.onFailure(new Exception("Username not found"));
+                        onFailure.onFailure(task.getException());
                     }
                 })
                 .addOnFailureListener(onFailure);

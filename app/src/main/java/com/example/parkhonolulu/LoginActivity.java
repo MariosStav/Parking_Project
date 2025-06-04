@@ -17,7 +17,6 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar loadingProgressBar;
     private Button forgotpasswordButton;
     private Button loginButton;
-    private Button loginManagerButton;
     private Button signUpButton;
 
     @Override
@@ -30,23 +29,15 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login);
         signUpButton = findViewById(R.id.signup);
         forgotpasswordButton = findViewById(R.id.forgotpassword);
-        loginManagerButton = findViewById(R.id.login2);
         loadingProgressBar = findViewById(R.id.loading);
 
-        forgotpasswordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, GetEmailActivity.class);
-                startActivity(intent);
-            }
+        forgotpasswordButton.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, GetEmailActivity.class);
+            startActivity(intent);
         });
 
         signUpButton.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-        });
-
-        loginManagerButton.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, LoginManagerActivity.class));
         });
 
         loginButton.setOnClickListener(v -> {
@@ -66,16 +57,52 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            User.loginWithUsername(username, password,
-                    user -> {
+            User.loginWithUsername(username, password, user -> {
+                Toast.makeText(LoginActivity.this, "Welcome, " + username, Toast.LENGTH_SHORT).show();
+
+                parking_session.fetchCurrentUserActiveSession(new parking_session.OnActiveSessionChecked() {
+                    @Override
+                    public void onActiveSessionFound(parking_session session) {
+                        session.fetchParkingLocationLatLng(new parking_session.OnLocationFetchedListener() {
+                            @Override
+                            public void onSuccess(double latitude, double longitude) {
+                                loadingProgressBar.setVisibility(View.GONE);
+                                startActivity(new Intent(LoginActivity.this, MyparklocationActivity.class));
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                loadingProgressBar.setVisibility(View.GONE);
+                                Toast.makeText(LoginActivity.this, "Failed to fetch location: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(LoginActivity.this, MapsActivity.class));
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onNoActiveSession() {
                         loadingProgressBar.setVisibility(View.GONE);
-                        Toast.makeText(LoginActivity.this, "Welcome, " + username, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, HomeDrawerActivity.class));
-                    },
-                    e -> {
+                        startActivity(new Intent(LoginActivity.this, MapsActivity.class));
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
                         loadingProgressBar.setVisibility(View.GONE);
-                        Toast.makeText(LoginActivity.this, "Login failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+                        Toast.makeText(LoginActivity.this, "Error checking active session: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this, MapsActivity.class));
+                    }
+                });
+            }, (Exception e) -> {
+                loadingProgressBar.setVisibility(View.GONE);
+                String msg = e.getMessage();
+                if (msg.equals("Username not found")) {
+                    usernameEditText.setError("Username not found");
+                } else if (msg.equals("Incorrect password")) {
+                    passwordEditText.setError("Incorrect password");
+                } else {
+                    Toast.makeText(LoginActivity.this, "Login failed: " + msg, Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }

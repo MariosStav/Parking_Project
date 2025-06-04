@@ -86,7 +86,7 @@ public class UnparkActvity extends BaseDrawerActivity {
                                         .setTitle("Unparked Successfully")
                                         .setMessage("You have been unparked.\nFee charged: $" + fee)
                                         .setPositiveButton("OK", (dialog, which) -> {
-                                            startActivity(new Intent(UnparkActvity.this, HomeDrawerActivity.class));
+                                            startActivity(new Intent(UnparkActvity.this, MapsActivity.class));
                                             finish();
                                         })
                                         .show();

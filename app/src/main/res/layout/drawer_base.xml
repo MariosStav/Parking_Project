@@ -18,7 +18,7 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/drawer_menu"
         app:itemIconTint="@color/nav_icon_tint_selector"
-        app:itemTextColor="@android:color/black"
+        app:itemTextColor="@android:color/white"
         android:background="@drawable/nav_header_gradient" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

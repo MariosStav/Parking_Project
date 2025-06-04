@@ -55,8 +55,14 @@ public abstract class BaseDrawerActivity extends AppCompatActivity implements Na
             startActivity(new Intent(this, MapsActivity.class));
         } else if (id == R.id.nav_complete_park) {
             startActivity(new Intent(this, UnparkActvity.class));
+        } else if (id == R.id.nav_my_park) {
+            startActivity(new Intent(this, MyparklocationActivity.class));
         } else if (id == R.id.nav_wallet) {
             startActivity(new Intent(this, WalletActivity.class));
+        } else if (id == R.id.nav_statistics) {
+            startActivity(new Intent(this, UserStatisticsActivity.class));
+        }else if (id == R.id.nav_edit_profile) {
+                startActivity(new Intent(this, EditUserActivity.class));
         } else if (id == R.id.nav_logout) { // Added logout logic
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, LoginActivity.class);

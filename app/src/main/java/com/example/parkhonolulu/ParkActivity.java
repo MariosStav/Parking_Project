@@ -52,6 +52,7 @@
 
             Park = findViewById(R.id.park);
             Park.setOnClickListener(v -> {
+                Park.setEnabled(false);
                 final double parkingFee = 20.0;
 
                 Balance.deductFromCurrentUserBalance(parkingFee,
@@ -74,7 +75,7 @@
                                         Toast.makeText(ParkActivity.this,
                                                 "Parking successful!\n$20 security deposit has been reserved on your account.",
                                                 Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(ParkActivity.this, HomeDrawerActivity.class));
+                                        startActivity(new Intent(ParkActivity.this, MyparklocationActivity.class));
                                     }
 
                                     @Override

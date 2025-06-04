@@ -24,7 +24,7 @@ public class parking_locations implements Parcelable {
     private String name;
     private String type;
     private GeoPoint geopoint;
-    private boolean free;
+    private boolean free, deleted;
     @Exclude
     private String documentId;
 
@@ -41,6 +41,7 @@ public class parking_locations implements Parcelable {
         this.type = type;
         this.geopoint = geopoint;
         this.free = free;
+        this.deleted = false;
     }
 
     // Parcelable constructor
@@ -198,7 +199,7 @@ public class parking_locations implements Parcelable {
 
         db.collection(COLLECTION_NAME)
                 .document(documentId)
-                .delete()
+                .update("deleted", true)
                 .addOnSuccessListener(unused -> callback.onSuccess())
                 .addOnFailureListener(callback::onFailure);
     }
@@ -253,4 +254,7 @@ public class parking_locations implements Parcelable {
 
     public boolean isFree() { return free; }
     public void setFree(boolean free) { this.free = free; }
+
+    public boolean isDeleted() { return deleted; }
+    public void setDeleted(boolean deleted) { this.deleted = deleted; }
 }
