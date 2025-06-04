@@ -111,34 +111,38 @@ public class User {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
+        // Find the document with the matching username
         db.collection("users")
                 .whereEqualTo("username", username)
+                .limit(1)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if (!task.getResult().isEmpty()) {
-                            // Username found
-                            DocumentSnapshot document = task.getResult().getDocuments().get(0);
-                            String email = document.getString("email");
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                        String email = document.getString("email");
 
-                            // Now try to sign in with email and password
-                            auth.signInWithEmailAndPassword(email, password)
-                                    .addOnSuccessListener(authResult -> {
-                                        FirebaseUser user = authResult.getUser();
-                                        if (user != null) {
-                                            onSuccess.onSuccess(user);
-                                        } else {
-                                            onFailure.onFailure(new Exception("Login failed"));
-                                        }
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        // Password might be incorrect
-                                        onFailure.onFailure(new Exception("Incorrect password"));
-                                    });
-                        } else {
-                            // Username not found
-                            onFailure.onFailure(new Exception("Username not found"));
+                        if (email == null || email.isEmpty()) {
+                            onFailure.onFailure(new Exception("Email not found for user"));
+                            return;
                         }
+
+                        // Authenticate with FirebaseAuth using email and password
+                        auth.signInWithEmailAndPassword(email, password)
+                                .addOnSuccessListener(authResult -> {
+                                    FirebaseUser user = authResult.getUser();
+                                    if (user != null) {
+                                        onSuccess.onSuccess(user);
+                                    } else {
+                                        onFailure.onFailure(new Exception("Login failed"));
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    // Relay the actual FirebaseAuth exception message
+                                    onFailure.onFailure(new Exception(e.getMessage()));
+                                });
+
+                    } else if (task.isSuccessful()) {
+                        onFailure.onFailure(new Exception("Username not found"));
                     } else {
                         onFailure.onFailure(task.getException());
                     }
